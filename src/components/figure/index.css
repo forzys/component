@@ -1,0 +1,52 @@
+
+
+
+
+
+/* figure {
+    display: inline-flex;    
+    position: relative;
+}
+figure img {
+    display: block;
+    width: 256px; 
+}
+figure > span {
+    container-type: inline-size;
+}
+figcaption {
+    width: 256px;
+    align-self: end;
+    text-align: center;
+    background-color: #0009;
+    color: #fff;
+    line-height: 2;
+    z-index: 1;
+    position: absolute;
+}  */
+
+
+figure {
+    display: inline-flex;    
+}
+
+figure img {
+    display: block;
+    width: 256px;
+    height: 192px;
+}
+
+figure > span {
+    container-type: inline-size;
+}
+
+figcaption {
+    display: flex;
+    width: 256px;
+    align-self: end;
+    text-align: center;
+    background-color: #0009;
+    color: #fff;
+    line-height: 2;
+    z-index: 1;
+}
