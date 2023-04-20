@@ -1,117 +1,76 @@
 
 
 
-import React from 'react' 
+import { createElement, createContext, useState, useEffect, useMemo } from 'react' 
 import { useTimeAuto } from  '@/hooks/useTimeAuto'
 import { useFullscreen } from  '@/hooks/useFullscreen'
 import { useMemoize, useMemoizedFn } from  '@/hooks/useMemoize'
-import { useCreation, useUpdate } from  '@/hooks/useCreation'
+import { useCreation, useUpdate, useActive } from  '@/hooks/useUpdate' 
+import { useHover } from  '@/hooks/useEvents' 
+import { usePagination } from  '@/hooks/usePagination' 
+import { useObserver } from  '@/hooks/useObserver' 
 
+import { onGetUUID } from './common'
 
+export { 
+    useHover, 
+    useActive,
+    useUpdate,
+    useCreation, 
 
-export { useTimeAuto, useFullscreen,  useMemoize, useMemoizedFn, useCreation, useUpdate } 
-// import { useMemo, useCallback, useRef } from "react";
+    useObserver,
+    useTimeAuto, 
+    usePagination, 
+    useFullscreen,  
+    useMemoize, 
+    useMemoizedFn,
+}
 
-// const weeks = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')
-
-// export const useTimeAuto = () => { 
-//     const appendZero = (obj) => obj < 10 ? "0" + obj : obj;
-
-//     const date = useMemo(()=>{
-// 		const now = new Date()
-//         const day = now.getDay()
-//         const week = weeks[day];
-//         const arrs = [appendZero(now.getMonth() + 1), appendZero(now.getDate()), now.getFullYear()]
-//         const date = arrs?.join('/');
-//         return [date, week];
-//     },[])
-
-//     const timeout = useCallback((fn, delay, count = 1)  => {
-//         let [timer,counts, stime] = [null, count, +new Date()]
-//         const loop = () => {
-//             const etime = +new Date();
-//             if (stime + delay <= etime) {
-//                 if(counts === 0){ return }
-//                 if(counts > 0){ counts = Math.floor(counts) - 1 }
-//                 fn();
-//                 stime = +new Date();
-//             }
-//             timer = requestAnimationFrame(loop);
-//         }
-//         timer = requestAnimationFrame(loop);
-//         return ()=> cancelAnimationFrame(timer);
-//     },[])
-
-// 	return [date, { timeout, appendZero }]
+// export const useFindIcon = (args, deps = {})=>{
+//     return useMemoizedFn((...arg)=>{
+//         const index = args?.findIndex(k=> deps[k])
+//         const param = arg[index > 0 ? index : 0];
+//         const fontSize = deps.fontSize || 20
+//         const lineHeight = deps.lineHeight || 0
+//         const strokeWidth = deps.strokeWidth || 2
+//         const styles = Object.assign({ fontSize, lineHeight, strokeWidth }, deps.style)
+//         return createElement('i',{ style: styles, onClick: deps.onClick }, param) 
+//     })
 // }
 
-// /**
-//  * 缓存函数返回的结果
-//  * 再次调用函数时参数一致直接返回结果
-//  */
-// export const useMemoize = (fn) => new Proxy(fn, {
-//     caches: new Map(),
-//     apply(target, arg, args) {
-//         const cache = args.toString();
-//         if (!this.caches.has(cache)){
-//             this.caches.set(cache, target.apply(arg, args))
-//         }
-//         return this.caches.get(cache)
-//     },
-// })
- 
-
-// /**
-//  *  缓存函数
-//  *  再次调用函数保持函数引用不变 且能获取最新状态
-//  */
-// export const useMemoizedFn = (fn) =>{
-//     const initFn = useRef(null); 
-//     const memoFn = useRef(null); 
-//     initFn.current = useMemo(() => fn, [fn]); 
-//     if (!memoFn.current) {
-//         memoFn.current = function (...args) {
-//             return initFn.current.apply(this, args);
-//         }
-//     }
-//     return memoFn.current;
-// } 
-
- 
-// export const useFullscreen = ()=>{
-//     const [isFullscreen, setIsFullscreen] = useState(false);
-//     useEffect(() => {
-//         const handleFullscreenChange = () => {
-//           setIsFullscreen(!!document.fullscreenElement);
-//         };
+export const useUid = (name)=> {
+    const [uid, setUid] = useState();
     
-//         document.addEventListener('fullscreenchange', handleFullscreenChange);
-    
-//         return () => {
-//           document.removeEventListener('fullscreenchange', handleFullscreenChange);
-//         };
-//     }, []);
+    useEffect(() => {
+        setUid(onGetUUID(name));
+    }, []);
 
+    return uid
+}
 
-//     const toggleFullscreen = () => {
-//         if (isFullscreen) {
-//           document.exitFullscreen();
-//         } else {
-//           document.documentElement.requestFullscreen();
-//         }
-//     };
-
-
-//     return [isFullscreen, toggleFullscreen];
-// }
-
-
-
-export const useFindIcon = (args, deps = {})=>{
  
-    return useMemoizedFn((...arg)=>{
-        const index = args?.findIndex(k=> deps[k])
-        const param = arg[index > 0 ? index : 0];
-        return <i>{param}</i> 
+
+export const useFindIcon = (deps={})=>{
+    const {fontSize, lineHeight, strokeWidth, color, thems } = { thems:'none', color:'currentColor', fontSize: 18, lineHeight: 0, strokeWidth: 2, ...deps }
+
+    const initSvg = {
+        width:'1em', height:'1em',
+        fill:thems, stroke: color,
+        viewBox:'0 0 48 48', 
+        strokeLinecap: 'butt', 
+        strokeLinejoin:'round',
+        className: deps.svgClassName,
+    }
+
+    return useMemoizedFn((args = {})=>{
+        try{
+            const key = Object.keys(args)?.find(k=> !!deps[k]);
+            const styles = Object.assign({ fontSize, lineHeight, strokeWidth, }, deps?.style);
+            const initI = { style: styles, className:deps?.className, onClick: deps?.onClick };
+            const children = args?.[key]?.map((item,i)=>({...item, key: 'svg-'+i }))
+            return createElement('i', initI, createElement('svg', initSvg, children))
+        }catch(e){  console.log('Error:(useFindIcon):'+ String(e)); return null }
     })
 }
+
+

@@ -1,0 +1,77 @@
+import { classes } from "@/common/common";
+import { memo, useCallback, useLayoutEffect, useMemo, useRef } from "react";
+import './index.css' 
+import { useUpdate, useCreation, useMemoizedFn } from "@/common/hooks";
+
+
+export default memo((props)=> { 
+    const refs = useRef({})
+    const [state, setState] = useUpdate({})
+
+    useLayoutEffect(()=>{
+        if(!!refs.current.after){
+            const element = refs.current.after;
+            const rect = element.getBoundingClientRect();
+            state.afterPadding = `calc(${rect?.width}px + 0.35rem)`; 
+        } 
+        if(!!refs.current.before){
+            const element = refs.current.before;
+            const rect = element.getBoundingClientRect();
+            state.beforePadding = `calc(${rect?.width}px + 0.35rem)`; 
+        }
+        !!(refs.current.after || refs.current.before) && setState({ ...state });
+    },[props.after, props.before])
+ 
+
+    const styles = useCreation(()=>{
+        return {
+            paddingLeft: state.beforePadding || undefined,
+            paddingRight: state.afterPadding || undefined, 
+            ...props.style,
+        }
+    },[state.beforePadding, state.afterPadding, props.style])
+ 
+
+
+    const onChange = useMemoizedFn((name, e)=>{
+        e.stopPropagation(); 
+        !!(props[name]) && props?.[name]?.(e)
+    });
+
+    return (
+        <div
+            onClick={e=> e?.stopPropagation()} 
+            data-disabled={props.disabled || undefined}
+            className={classes('input-wrap', props.className)} 
+        >
+            {
+                !!props.before &&
+                <div ref={node=> refs.current.before = node} className={classes('input-before', props.beforeClass)}>
+                    {props.before} 
+                </div>
+            }
+
+            <input
+                className={classes('input-input', props.inputClass)} 
+                placeholder={props.placeholder}
+                
+                data-before={!!props.before || undefined}
+                data-after={!!props.after || undefined}
+                data-borderless={!!props.borderless || undefined}
+
+                style={styles}
+                value={props.value}
+                onChange={onChange.bind(null, 'onChange')} 
+                onInput={onChange.bind(null, 'onInput')} 
+            />
+
+            {
+                !!props.after &&
+                <div ref={node=> refs.current.after = node} className={classes('input-after', props.afterClass)}>
+                    {props.after} 
+                </div>
+            }
+        </div>
+    )
+
+})

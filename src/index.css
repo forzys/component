@@ -14,6 +14,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
+*{
+  box-sizing: border-box;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -36,10 +40,16 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+button, input {
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  border-style: none;
+  padding: 0;
+
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+ 
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
@@ -47,9 +57,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
+
+button:-moz-focusring,[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring {
+  outline: 0.0625rem dotted ButtonText;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;

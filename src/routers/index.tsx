@@ -35,8 +35,6 @@ export const rootRouter: RouteItem[] = [
 
 const onRouters = (routers:RouteItem[]) => { 
     return routers?.map((item: RouteItem)=>{
-        // const Element = lazy(() => import("@/pages"+item.component ))
-        // console.log({ Element })
         return  {
             // ...item,
             path: item?.path,

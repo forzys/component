@@ -1,13 +1,6 @@
 
 
 
-
-
-
-
-
-
-
 export function numberFormat(num = '', decimals = 2, info) {
 	const { pre = '', suf = '', currency = true, init = '-' } = typeof info === 'object' ? info : { currency: false };
 	if (num === '' || num === null || Number.isNaN(+num)) {
@@ -34,4 +27,15 @@ export function onGetBase64(file) {
         reader.onload = () => resolve(reader.result)
         reader.onerror = (error) => reject(error)
     })
+}
+
+
+export function onGetUUID (name = ''){
+    const uid = Math.random().toString(36).slice(2, 11)
+    return name ? name + uid.slice(-7) : uid
+}
+
+
+export function classes(init, ...names){
+    return [init, ...names]?.filter(Boolean).join(' ');
 }

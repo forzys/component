@@ -1,9 +1,13 @@
 
  
 
-export default ()=>{
-    return (
-        <svg role="presentation" width="36" height='36' className="icon-progress" viewBox="0 0 48 48">
+import { memo } from 'react'
+import { useFindIcon } from '@/common/hooks' 
+
+export default memo((props)=>{
+    const onFindIcon = useFindIcon(props)
+    return onFindIcon({
+        progress:[
             <circle cx="24" cy="24" r="22"  
                 style={{ 
                     fill: 'transparent', 
@@ -13,9 +17,10 @@ export default ()=>{
                     strokeDasharray:'38px, 8',
                     strokeDashoffset: 180,
                 }} 
-            />
-            
-            {/* <polygon points="50,38 41,50 59,50" 
+            />,
+        ],
+        a:[
+            <polygon points="50,38 41,50 59,50" 
                 style={{
                     stroke: 'transparent',
                     fill: '#1677ff',
@@ -23,7 +28,7 @@ export default ()=>{
                     filter: 'blur(0.1px)',
                     transform: 'scale(1) translateY(5%)'
                 }}
-            /> */}
-        </svg>
-    )
-}
+            />
+        ]
+    })
+})

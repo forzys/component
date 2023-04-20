@@ -23,7 +23,7 @@ export const useTimeAuto = () => {
         const loop = () => {
             const etime = +new Date();
             if (stime + delay <= etime) {
-                if(counts === 0){ return }
+                if(counts === 0){ return cancelAnimationFrame(timer) }
                 if(counts > 0){ counts = Math.floor(counts) - 1 }
                 fn();
                 stime = +new Date();

@@ -4,14 +4,18 @@
 
 
 
+import { useMemoizedFn } from '@/common/hooks' 
 import { useRef, useLayoutEffect } from 'react'
  
   
 export default (props) => {
-    const [baseWidth, baseHeight] = [960, 540]
-    const [draw, drawing, ref] = [useRef(null), useRef(null), useRef(props.onChange)];
+
+    const baseWidth = 960
+    const baseHeight = 540 
+    const draw = useRef(null)
+    const drawing = useRef(null)
 	 
-    const onRateChange = () => {
+    const onRateChange = useMemoizedFn(() => {
         if(draw?.current) {
             const baseRate = parseFloat((baseWidth / baseHeight).toFixed(5));
             const initRate = parseFloat((window?.innerWidth / window?.innerHeight)?.toFixed(5));
@@ -26,12 +30,12 @@ export default (props) => {
                 draw.current.style.transform = `scale(${scale?.width}, ${scale?.height}) translate(-50%, -50%)`
             }
         }
-    }
+    })
 
-    const resize = () => {
+    const resize = useMemoizedFn(() => {
         clearTimeout(drawing?.current);
         drawing.current = setTimeout(onRateChange, 200)
-    }
+    })
 
     useLayoutEffect(()=>{
         if(props.open !== false){
@@ -41,9 +45,7 @@ export default (props) => {
         return ()=> window.removeEventListener('resize', resize)
     },[props.open])
 
-    console.log({ props, TEST: Object.is(ref.current, props.onChange) })
-
-
+ 
     return (
         <div id={props?.id} onClick={props.onChange} className={props?.className} ref={draw} style={{ width: baseWidth, height: baseHeight, ...props?.style }}>
             {props?.children}

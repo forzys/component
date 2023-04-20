@@ -1,0 +1,38 @@
+
+
+.pagination-group{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    box-pack: center;
+    justify-content: center;
+    gap: calc(1rem / 2);
+    -webkit-tap-highlight-color: transparent;
+}
+.pagination-group[data-disabled]{
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination-group[data-disabled] > button {
+    pointer-events: none;
+}
+
+
+.pagination-group > * {
+    box-sizing: border-box;
+    flex-grow: 0;
+}
+
+.pagination-dots{
+    height: 2rem;
+    min-width: 2rem;
+    display: flex;
+    box-align: center;
+    align-items: center;
+    box-pack: center;
+    justify-content: center;
+    pointer-events: none;
+}

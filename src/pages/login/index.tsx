@@ -1,47 +1,48 @@
 
 
 
-import { CSSProperties, useEffect, useState } from 'react' 
+import { useEffect, useState, CSSProperties,memo, useMemo } from 'react' 
+
 import Timing from '@/components/timing' 
 import Stretch from '@/components/stretch' 
-import Progress from '@/components/icons/progress' 
-import Screen from '@/components/icons/screen' 
-import Search from '@/components/icons/search' 
-import Weather from '@/components/icons/weather' 
-import Loading from '@/components/icons/loading' 
-import Symbol from '@/components/icons/symbol' 
-import Official from '@/components/icons/official' 
-import Configure from '@/components/icons/configure' 
-import Media from '@/components/icons/media' 
 import Spining from '@/components/spining' 
 import Figure from '@/components/figure' 
-// import Segmented from '@/components/segment' 
-import { useMemoize, useMemoizedFn, useFullscreen, useCreation } from '@/common/hooks' 
+import Switch from '@/components/switch' 
+import Button from '@/components/button'
+import Groups from '@/components/group'
+import Segment from '@/components/segment'
+import Tooltip from '@/components/tooltip'
+import Pagination from '@/components/pagination'
+import Input from '@/components/input'
+import Select from '@/components/select'
+
+import { Progress, Media, Configure, Official, Symbol, Loading, Weather,Search, Screen} from '@/components/icons' 
+import { useMemoizedFn, useFullscreen, useCreation, usePagination, useUpdate } from '@/common/hooks' 
 import { useFetch, apis } from '@/request/index'
-
-
 
 interface CustomCSS extends CSSProperties {
     '--status-color'?: string;
 }
 
 interface CustomState {
-    // a?: number;
     loading?: boolean|number;
     name?: string;
     mode?: string|number|undefined;
     date?: string; 
     days?: string|number|null;
+    inputType?:string|number|null;
 }
 
 export default ()=>{
     const [http] = useFetch()
     const [isFull, onToggle] = useFullscreen()
-    const [state, setState] = useState<CustomState>({ loading: true  })
+    const [state, setState] = useUpdate({ loading: true })
+    const pagination = usePagination({ total: 20, init: 1 })
     
+
     useEffect(()=>{ 
         const holiday = String(apis.holiday).replace('$var', '2023');
- 
+
         http?.get(holiday).then((res: any)=>{
             const now = new Date().valueOf(); 
             const arrs = res?.days?.map((i: any)=> {
@@ -49,7 +50,7 @@ export default ()=>{
                 return {...i, diff: Math.abs(now - tamp)}
             }).sort((a:any, b:any)=>a.diff - b.diff)
 
-            const days = arrs?.slice(0, 2)?.map((i:CustomState, index:number)=>[!!index && <span />, i?.name, i?.date])
+            const days = arrs?.slice(0, 2)?.map((i:CustomState, index:number)=>[!!index && <span key={index} />, i?.name, i?.date])
             state.days = days
             return setState({ ...state,  days: days })
         });
@@ -69,9 +70,10 @@ export default ()=>{
     }
 
     const nowData = useCreation(() => getNowData(), []);
-
  
     const onModeChange =()=>{
+ 
+        pagination.next()
         // 点击切换模式
         if(!!state.mode){
             document.body.classList.remove("dark-mode")
@@ -81,10 +83,12 @@ export default ()=>{
         state.mode = !!state.mode ? 0 : 1
     }
 
+
+    console.log('First:::', state )
   
     return (
         <Stretch onChange={onChange} open={false} style={{ padding: 48 }} id="draw" className="frosted">
-            <Spining loading={state?.loading}> 
+            <Spining loading={ state?.loading }> 
                 <div style={{display:'flex'}}>
 
                     <div style={{ width: 700, textAlign:'left' }}> 
@@ -105,69 +109,144 @@ export default ()=>{
                             <span> 最近假期 ： </span> 
                             <span style={{display:'inline-flex', gap: 6}}> {[state.days] } </span> 
                         </div>
-                
-
+                 
                         <div>正常的函数： {getNowData()}</div>
                         <div>useCreation包裹后的： {nowData}</div>
-    
-                        <div style={{ display:'flex', gap: 24, alignItems:'center'}}> 
-                            <Loading type="1" /> 
-                            <Loading type="2" /> 
-                        </div>
-                        <div style={{ display:'flex', gap: 24, alignItems:'center'}}> 
+
+
+                        <Groups style={{ marginBottom: 24 }}>
+                            <Switch />
+                            <Segment 
+                                fontSize="0.5rem"
+                                options={[ 
+                                    {label: 'apple', value: 'apple'},
+                                    {label: 'funct', value: 'funct', disabled: true },
+                                    {label: 'badge', value: 'badge'},
+                                    {label: 'statu', value: 'statu'},
+                                    {label: 'align', value: 'align'},
+                                ]} 
+                            /> 
+                            <Tooltip label={<div> Hello <br /> Hover </div>}>
+                                <Button>Hello Hover</Button>
+                            </Tooltip> 
+                        </Groups>
+
+                        <Groups style={{ marginBottom: 24 }}>
+                            <Pagination total={12} />
+                        </Groups>
+                        <Groups style={{ marginBottom: 24 }}>
+                            <Input
+                                placeholder="2323" 
+                                before={[
+                                    <Segment 
+                                        fontSize="0.1rem"
+                                        options={[
+                                            {label: 'apple', value: 'apple'},
+                                            {label: 'funct', value: 'funct'},
+                                        ]}
+                                    />,
+                                    <Search fontSize="18px" search />
+                                ].find((n,i)=> Number(state?.inputType === 'segment') === i)}
+
+                                after={
+                                    <Button type="text" compact onClick={()=> setState({ inputType: state?.inputType === 'segment' ? 'search': 'segment'})}>
+                                        { ['Search', 'Segment'].find((n,i)=> Number(state?.inputType === 'segment') === i) }
+                                    </Button>
+                                }
+                                value={state?.input || ''}
+                                onChange={(e: any)=>setState({ input: e?.target?.value })}
+                            /> 
+
+                            <Select />
+                        </Groups>
+  
+                        <Groups> 
+                            <Loading className='spinner-icon' type="1" /> 
+                            <Loading type="3" className='spinner-icon2' />
+                            <Loading type="2" className='spinner-icon2' fontSize="22px"  /> 
+                        </Groups>
+
+                        <Groups> 
                             <Search search />
                             <Search find />
                             <Search history />
                             <Search zoomIn />
                             <Search zoomOut />
-                        </div>
+                        </Groups>
 
-                        <div style={{ display:'flex', gap: 24, alignItems:'center'}}> 
+                        <Groups> 
                             <Symbol close />
+                            {/* <Button icon='close' /> */}
+                            <Symbol close-o />
                             <Symbol check  />
-                            <Symbol  minus  />
-                            <Symbol  plus  />  
-                            <Symbol  exclamation  />  
-                        </div>
+                            <Symbol minus  />
+                            <Symbol plus  />  
+                            <Symbol exclamation  />  
+                            <Symbol arraw-left  />  
+                            <Symbol arraw-right  />  
+                            <Symbol back-left  />  
+                            <Symbol back-right  />  
+                        </Groups>
 
-                        <div style={{ display:'flex', gap: 24, alignItems:'center'}}> 
-                            <Configure setting  /> 
-                            <Configure pic  /> 
+                        <Groups> 
+                            <Configure system  />  
+                            <Configure setting  />  
                             <Configure like  /> 
+                            <Configure tips  /> 
                             <Configure copy  /> 
-                            <Configure  delete  /> 
-                            <Configure  power  /> 
-                            <Configure  application  /> 
-                            <Configure  lock  /> 
-                            <Configure  unlock  /> 
-                        </div>
+                            <Configure delete  /> 
+                            <Configure power  /> 
+                            <Configure application  /> 
 
-                        <div style={{ display:'flex', gap: 24, alignItems:'center'}}> 
-                            <Official  email  /> 
-                            <Official  schedule  />   
-                            <Official  word  />   
-                            <Official  split  />   
-                            <Official  text  />   
-                            <Official  focus  />   
-                        </div>
+                            <Configure lock  /> 
+                            <Configure unlock  /> 
+                            <Configure expand  /> 
+                            <Configure scanning  /> 
+                            <Configure wifi  /> 
+                        </Groups>
 
-                        <div style={{ display:'flex', gap: 24, alignItems:'center'}}> 
+                        <Groups> 
+                            <Official email /> 
+                            <Official schedule />   
+                            <Official word /> 
+                            <Official text />
+                            <Official log />
+                            <Official notes />   
+                            <Official label />   
+                        </Groups>
+
+                        <Groups> 
                             <div onClick={onModeChange}>
                                 <Weather sun />
                             </div>  
                             <div onClick={onModeChange}>
                                 <Weather moon />
                             </div>
-                        </div>
 
-                        <div style={{ display:'flex', gap: 24, alignItems:'center'}}> 
-                            <Screen screen-full />  
-                            <Screen screen-off />   
-                            <Screen screenshot />   
-                        </div>
+                            <div style={{position:'relative'}}>
+                                <Weather plan />
+                            </div> 
+                        </Groups>
+ 
+                        <Groups> 
+                            <Groups onClick={onToggle}>
+                                {
+                                    isFull ? (
+                                        <Screen screen-off />  
+                                    ): (
+                                        <Screen screen-full />  
+                                    )
+                                }
+                            </Groups>
+
+                            <Screen screenshot />
+                            <Screen focus />
+                        </Groups>
 
 
-                        <div style={{ display:'flex', gap: 24, alignItems:'center'}}> 
+                        <Groups> 
+                            <Media picture />  
+                            <Media album />  
                             <Media voice-message />  
                             <Media broadcast />  
                             <Media camera />  
@@ -181,23 +260,23 @@ export default ()=>{
                             <Media volumn-up />  
                             <Media volumn-mute />  
                             <Media video />
-                        </div> 
+                        </Groups> 
 
                         <div className='spinner-ico2' style={{ display:'flex', gap: 24, alignItems:'center'}}>
                             
                             <Progress /> 
-                    
-
                       
                         </div> 
                     </div>
 
                     <div>
-                        <Figure img="https://image.zhangxinxu.com/image/study/nature/11.jpg" title="美女写真 by title cover" />
+                        <Figure 
+                            img="https://t8.baidu.com/it/u=3297273922,3348521994&fm=218&app=126&size=f242,150&n=0&f=JPEG&fmt=auto?s=BA81A14C8BA0BD4308F5D10B0000E0C1&sec=1681491600&t=0a363ddbfcfc830e10038a0ed04be108" 
+                            title="774×1186 131 KB" 
+                        />
                     </div>
                     
                 </div>
-               
             </Spining> 
         </Stretch>  
     )
