@@ -11,7 +11,7 @@ import { useRef, useLayoutEffect } from 'react'
 export default (props) => {
 
     const baseWidth = 960
-    const baseHeight = 540 
+    const baseHeight = 600 
     const draw = useRef(null)
     const drawing = useRef(null)
 	 

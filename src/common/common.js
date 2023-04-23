@@ -39,3 +39,33 @@ export function onGetUUID (name = ''){
 export function classes(init, ...names){
     return [init, ...names]?.filter(Boolean).join(' ');
 }
+
+
+
+
+function getScroll(win, top) {
+    const nameX = top ? 'Y' : 'X'
+    const nameT = top ? 'Top' : 'Left'
+    let ret = win[`page${nameX}Offset`] 
+    let met = `scroll${nameT}`;
+
+    if (typeof ret !== 'number') {
+        const doc = win.document;
+        ret = doc.documentElement[met];
+        if (typeof ret !== 'number') {
+            ret = doc.body[met];
+        }
+    }
+    return ret;
+}
+
+export function offset(el) {
+    const rect = el.getBoundingClientRect();
+    const pos = { left: rect.left,  top: rect.top };
+    const doc = el.ownerDocument;
+    const win = doc.defaultView || doc.parentWindow;
+    
+    pos.top += getScroll(win, true);
+    pos.left += getScroll(win, false);
+    return pos;
+  }

@@ -15,8 +15,9 @@ import Tooltip from '@/components/tooltip'
 import Pagination from '@/components/pagination'
 import Input from '@/components/input'
 import Select from '@/components/select'
+import Modal from '@/components/modal'
 
-import { Progress, Media, Configure, Official, Symbol, Loading, Weather,Search, Screen} from '@/components/icons' 
+import { Direction, Media, Configure, Official, Symbol, Loading, Weather,Search, Screen} from '@/components/icons' 
 import { useMemoizedFn, useFullscreen, useCreation, usePagination, useUpdate } from '@/common/hooks' 
 import { useFetch, apis } from '@/request/index'
 
@@ -112,8 +113,7 @@ export default ()=>{
                  
                         <div>正常的函数： {getNowData()}</div>
                         <div>useCreation包裹后的： {nowData}</div>
-
-
+ 
                         <Groups style={{ marginBottom: 24 }}>
                             <Switch />
                             <Segment 
@@ -157,7 +157,17 @@ export default ()=>{
                                 onChange={(e: any)=>setState({ input: e?.target?.value })}
                             /> 
 
-                            <Select />
+                            <Select 
+                                option={[
+                                    {label: 'list1', value: 'list1'},
+                                    {label: 'list2', value: 'list2', disabled: 1},
+                                    {label: 'list3', value: 'list3'},
+                                    {label: 'list4', value: 'list4', disabled: 1},
+                                    {label: 'list5', value: 'list5'},
+                                    {label: 'list6', value: 'list6'},
+                                    {label: 'list7', value: 'list7'},
+                                ]}
+                            />
                         </Groups>
   
                         <Groups> 
@@ -182,10 +192,8 @@ export default ()=>{
                             <Symbol minus  />
                             <Symbol plus  />  
                             <Symbol exclamation  />  
-                            <Symbol arraw-left  />  
-                            <Symbol arraw-right  />  
-                            <Symbol back-left  />  
-                            <Symbol back-right  />  
+                           
+                            <Symbol more  />  
                         </Groups>
 
                         <Groups> 
@@ -262,11 +270,25 @@ export default ()=>{
                             <Media video />
                         </Groups> 
 
-                        <div className='spinner-ico2' style={{ display:'flex', gap: 24, alignItems:'center'}}>
-                            
-                            <Progress /> 
-                      
-                        </div> 
+                        <Groups>  
+                            <Direction ring  />  
+
+                            <Direction caret-up  />  
+                            <Direction caret-down  />  
+                            <Direction caret-left  />  
+                            <Direction caret-right  />  
+
+                            <Direction arraw-left  />  
+                            <Direction arraw-right  />  
+                            <Direction arraw-down  />  
+                            <Direction arraw-up  />  
+
+                            <Direction left  />  
+                            <Direction right  />  
+
+                            <Direction up  />  
+                            <Direction down  />  
+                        </Groups> 
                     </div>
 
                     <div>

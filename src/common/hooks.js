@@ -1,18 +1,19 @@
 
 
 
-import { createElement, createContext, useState, useEffect, useMemo } from 'react' 
+import { createElement, createContext, useState, useEffect, useMemo, useLayoutEffect } from 'react' 
 import { useTimeAuto } from  '@/hooks/useTimeAuto'
 import { useFullscreen } from  '@/hooks/useFullscreen'
 import { useMemoize, useMemoizedFn } from  '@/hooks/useMemoize'
 import { useCreation, useUpdate, useActive } from  '@/hooks/useUpdate' 
-import { useHover } from  '@/hooks/useEvents' 
+import { useHover, useClick } from  '@/hooks/useEvents' 
 import { usePagination } from  '@/hooks/usePagination' 
 import { useObserver } from  '@/hooks/useObserver' 
 
 import { onGetUUID } from './common'
 
 export { 
+    useClick,
     useHover, 
     useActive,
     useUpdate,
@@ -72,5 +73,3 @@ export const useFindIcon = (deps={})=>{
         }catch(e){  console.log('Error:(useFindIcon):'+ String(e)); return null }
     })
 }
-
-

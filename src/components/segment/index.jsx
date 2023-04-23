@@ -46,7 +46,7 @@ const Segmented = memo((props)=>{
         return props.options?.map((i, j)=>{
             const item = typeof i === 'string' ? { label: i, value: i } : i
             return (
-                <div className="segment-item">
+                <div className="segment-item" key={item.value}>
                     <input
                         name={uid}
                         disabled={props.disabled || item.disabled}

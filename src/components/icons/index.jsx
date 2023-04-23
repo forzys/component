@@ -5,7 +5,7 @@
 
 
  
-import Progress from '@/components/icons/progress' 
+import Direction from '@/components/icons/direction' 
 import Screen from '@/components/icons/screen' 
 import Search from '@/components/icons/search' 
 import Weather from '@/components/icons/weather' 
@@ -16,4 +16,4 @@ import Configure from '@/components/icons/configure'
 import Media from '@/components/icons/media' 
 
 
-export { Progress, Screen, Search, Weather, Loading, Symbol, Official, Configure, Media }
+export { Direction, Screen, Search, Weather, Loading, Symbol, Official, Configure, Media }

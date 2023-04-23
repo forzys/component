@@ -1,5 +1,5 @@
 import { memo } from "react"; 
-import { Symbol } from '@/components/icons' 
+import { Direction,Symbol } from '@/components/icons' 
 import { usePagination } from '@/common/hooks' 
 import Button from '@/components/button'
 import './index.css' 
@@ -10,7 +10,7 @@ export default memo((props)=>{
     return (
         <div className="pagination-group" data-disabled={props.disabled} onClick={e=> e?.stopPropagation()}> 
             <Button disabled={pagination.active <= 1} onClick={()=>pagination.prev()}>
-                <Symbol back-left strokeWidth="3" color='#000' thems="#fff" />
+                <Direction left strokeWidth="3" color='#000' thems="#fff" />
             </Button>
             {
                 pagination?.range?.map((item, index)=>{
@@ -29,7 +29,7 @@ export default memo((props)=>{
                 })
             }
             <Button disabled={pagination.active === props.total} onClick={()=>pagination.next()}>
-                <Symbol back-right strokeWidth="3" color ='#000'   />
+                <Direction right strokeWidth="3" color ='#000'   />
             </Button>
              
         </div>

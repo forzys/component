@@ -2,7 +2,7 @@
 
 
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef,useMemo, useCallback } from 'react';
 
 
 export function useHover() {
@@ -26,6 +26,30 @@ export function useHover() {
     }, []);
 
     return [ref, hovered]
+}
+
+ 
+
+
+export const useClick = (sure)=>{
+    const point = useRef(null);
+
+    const id = useMemo(()=> Math.floor(Math.random() * 100000) ,[])
+
+    const onGetClickPoint = useCallback((e) => {
+        point.current = { x: e.pageX, y: e.pageY } 
+        console.log(id, point.current)
+        setTimeout(()=> point.current = null, 100);
+    },[]);
+
+    useEffect(()=>{
+        !!sure && document.documentElement.addEventListener('click', onGetClickPoint, true);
+        return ()=>{
+            document.documentElement.removeEventListener('click', onGetClickPoint, true)
+        };
+    },[])
+
+    return point.current
 }
 
 

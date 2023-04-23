@@ -21,8 +21,7 @@ export default memo((props)=> {
         }
         !!(refs.current.after || refs.current.before) && setState({ ...state });
     },[props.after, props.before])
- 
-
+  
     const styles = useCreation(()=>{
         return {
             paddingLeft: state.beforePadding || undefined,
@@ -58,9 +57,15 @@ export default memo((props)=> {
                 data-before={!!props.before || undefined}
                 data-after={!!props.after || undefined}
                 data-borderless={!!props.borderless || undefined}
-
+                data-open={!!props.open || undefined}
+               
                 style={styles}
+                type={props.type || undefined}
+                readOnly={props.readOnly}
+                autoComplete="off"
                 value={props.value}
+                onClick={props?.onClick}
+                onBlur={props.onBlur}
                 onChange={onChange.bind(null, 'onChange')} 
                 onInput={onChange.bind(null, 'onInput')} 
             />

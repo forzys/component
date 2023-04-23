@@ -1,9 +1,20 @@
-
+import { memo, useState } from 'react'
 import Configure from '@/components/icons/configure'
+import Modal from '@/components/modal'
 import Media from '@/components/icons/media'
+import { useMemoizedFn } from '@/common/hooks'
 import './index.css' 
 
-export default (props)=>{
+
+
+
+export default memo((props)=>{
+    const [open, setOpen] = useState(false)
+ 
+    const onOpen = useMemoizedFn((info)=>{
+        setOpen(!!info)
+    });
+ 
     return (
         <figure>
             <span><img src={[props?.img, props.src]} /></span>
@@ -13,8 +24,13 @@ export default (props)=>{
                 <span className='info'>
                     {[props?.title, props.children]}
                 </span>
-                <Configure expand fontSize="18px" strokeWidth="3" style={{ cursor: 'pointer' }} />
+                <Configure 
+                    onClick={onOpen.bind(null,true)}
+                    expand fontSize="18px" strokeWidth="3" style={{ cursor: 'pointer' }}
+                />
             </figcaption>
+
+            <Modal open={open} onClose={onOpen.bind(null, false)} />
         </figure>
     )
-}
+})
