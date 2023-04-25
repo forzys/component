@@ -1,10 +1,9 @@
-
- 
+import { memo } from 'react'
 import Loading from "@/components/icons/loading"
 import './index.css'
 
-export default (props)=>{ 
-   
+export default memo((props)=>{ 
+
     return (
         <div style={{ position: 'relative' }}>
             {
@@ -22,4 +21,4 @@ export default (props)=>{
             </div> 
         </div>
     )
-}
+})

@@ -7,13 +7,10 @@ import './index.css'
 
 
 
-
 export default memo((props)=>{
     const [open, setOpen] = useState(false)
  
-    const onOpen = useMemoizedFn((info)=>{
-        setOpen(!!info)
-    });
+    const onOpen = useMemoizedFn((info)=>{ setOpen(!!info) });
  
     return (
         <figure>

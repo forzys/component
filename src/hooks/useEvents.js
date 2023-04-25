@@ -1,11 +1,15 @@
 
-
-
-
 import { useState, useEffect, useRef,useMemo, useCallback } from 'react';
 
 
-export function useHover() {
+
+
+/**
+ * useHover： 监听元素 hover 返回状态
+ * useClick： 监听元素 click 返回点击点
+ */
+
+export function useHover(){
     const ref = useRef(null);
     const [hovered, setHovered] = useState(false);
   
@@ -28,26 +32,51 @@ export function useHover() {
     return [ref, hovered]
 }
 
- 
 
 
-export const useClick = (sure)=>{
+// export function useClickPoint() {
+//     const point = useRef(null);
+//     const clickRef = useRef(null);
+  
+//     useEffect(() => {
+//         function handleClick(e) {
+//             point.current = { x: e.pageX, y: e.pageY } 
+//             setTimeout(() => (point.current = null), 100);
+//         }
+  
+//         const node = clickRef.current;
+//         node.addEventListener('click', handleClick);
+    
+//         return () => {
+//             node.removeEventListener('click', handleClick);
+//         };
+//     }, []);
+  
+//     return [clickRef, point?.current];
+// }
+
+
+export function useClick(sure){
+    const ref = useRef(null);
     const point = useRef(null);
 
     const id = useMemo(()=> Math.floor(Math.random() * 100000) ,[])
-
-    const onGetClickPoint = useCallback((e) => {
-        point.current = { x: e.pageX, y: e.pageY } 
-        console.log(id, point.current)
-        setTimeout(()=> point.current = null, 100);
-    },[]);
-
+ 
     useEffect(()=>{
-        !!sure && document.documentElement.addEventListener('click', onGetClickPoint, true);
-        return ()=>{
-            document.documentElement.removeEventListener('click', onGetClickPoint, true)
+        const onHandleClick = (e) => {
+            point.current = { x: e.pageX, y: e.pageY } 
+            console.log(id, point.current);
+            setTimeout(()=> point.current = null, 100);
         };
-    },[])
+
+        // const node = clickRef.current;
+        // node.addEventListener('click', handleClick, true);
+
+        document.documentElement.addEventListener('click', onHandleClick, true);
+        return ()=>{
+            document.documentElement.removeEventListener('click', onHandleClick, true)
+        };
+    },[ref.current])
 
     return point.current
 }

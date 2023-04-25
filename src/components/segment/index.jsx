@@ -3,17 +3,18 @@
 
 
 
-import { memo, useState, useLayoutEffect,useMemo, useRef, useEffect } from "react"
+import { memo, useState, useLayoutEffect, useRef, useEffect } from "react"
 import { useUid, useActive, useObserver, useCreation } from '@/common/hooks' 
- 
+
 import './index.css'
 
  
 const onGetDefault = (arrs)=>{
-    return Array.isArray(arrs) ? arrs.find((i) => !i.disabled)?.value ?? arrs[0]?.value ?? arrs[0] ?? null : null
+    const [first] = arrs
+    return Array.isArray(arrs) ? arrs.find((i) => !i.disabled)?.value ?? first?.value ?? first ?? null : null
 } 
- 
-const Segmented = memo((props)=>{ 
+
+export default memo((props)=>{ 
     const [position, setPosition] = useState({
         width: 0,
         height: 0,
@@ -27,7 +28,7 @@ const Segmented = memo((props)=>{
     });
 
     const [animate, setAnimate] = useState(false); 
-    const [observerRef, containerRect]  = useObserver()
+    const [observerRef, containerRect] = useObserver()
 
     const uid = useUid('seg')
     const refs = useRef({})
@@ -40,39 +41,38 @@ const Segmented = memo((props)=>{
         } else {
             !animate && setAnimate(true);
         }
-    });
+    },[]);
 
-    const segment = useCreation(()=>{
-        return props.options?.map((i, j)=>{
-            const item = typeof i === 'string' ? { label: i, value: i } : i
-            return (
-                <div className="segment-item" key={item.value}>
-                    <input
-                        name={uid}
-                        disabled={props.disabled || item.disabled}
-                        type="radio"
-                        value={item.value}
-                        id={`${uid}-${item.value}`}
-                        className="segment-item-input"
-                        checked={active === item.value} 
-                        onChange={() => setActive(item.value)}
-                    /> 
+    // const segment = useCreation(()=>{
+    //     return props.options?.map((i, j)=>{
+    //         const item = typeof i === 'string' ? { label: i, value: i } : i
+    //         return (
+    //             <div className="segment-item" key={item.value}>
+    //                 <input
+    //                     name={uid}
+    //                     disabled={props.disabled || item.disabled}
+    //                     type="radio"
+    //                     value={item.value}
+    //                     id={`${uid}-${item.value}`}
+    //                     className="segment-item-input"
+    //                     checked={active === item.value}
+    //                     onChange={() => setActive(item.value)}
+    //                 />
 
-                    <label
-                        className='segment-item-label'
-                        style={{ '--segment-font': props.fontSize }}
-                        data-active={(active === item.value && !(props.disabled || item.disabled)) || undefined}
-                        data-disabled={props.disabled || item.disabled || undefined}
-                        htmlFor={`${uid}-${item.value}`}
-                        ref={(node) => refs.current[item.value] = node}
-                    >
-                        {item.label}
-                    </label>
-                </div>
-                
-            )
-        })
-    },[props.options,props.fontSize, active])
+    //                 <label
+    //                     className='segment-item-label'
+    //                     style={{ '--segment-font': props.fontSize }}
+    //                     data-active={(active === item.value && !(props.disabled || item.disabled)) || undefined}
+    //                     data-disabled={props.disabled || item.disabled || undefined}
+    //                     htmlFor={`${uid}-${item.value}`}
+    //                     ref={(node) => refs.current[item.value] = node}
+    //                 >
+    //                     {item.label}
+    //                 </label>
+    //             </div>
+    //         )
+    //     })
+    // },[props.options, props.fontSize, active])
 
 
     useEffect(() => {
@@ -110,10 +110,36 @@ const Segmented = memo((props)=>{
  
     return (
         <div className="segment" ref={observerRef} onClick={e=>e.stopPropagation()}>
-            <span className="segment-active" style={activeStyle} /> 
-            {segment}
+            <span className="segment-active" style={activeStyle} />
+            {
+                props.options?.map((i, j)=>{
+                    const item = typeof i === 'string' ? { label: i, value: i } : i
+                    return (
+                        <div className="segment-item" key={item.value}>
+                            <input
+                                name={uid}
+                                disabled={props.disabled || item.disabled || undefined}
+                                type="radio"
+                                value={item.value}
+                                id={`${uid}-${item.value}`}
+                                className="segment-item-input"
+                                checked={active === item.value}
+                                onChange={() => setActive(item.value)}
+                            />
+                            <label
+                                className='segment-item-label'
+                                style={{ '--segment-font': props.fontSize }}
+                                data-active={(active === item.value && !(props.disabled || item.disabled)) || undefined}
+                                data-disabled={props.disabled || item.disabled || undefined}
+                                htmlFor={`${uid}-${item.value}`}
+                                ref={(node) => refs.current[item.value] = node}
+                            >
+                                {item.label}
+                            </label>
+                        </div>
+                    )
+                })
+            }
         </div>
     )
 })
-
-export default Segmented

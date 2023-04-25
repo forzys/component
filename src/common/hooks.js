@@ -1,16 +1,19 @@
 
 
 
-import { createElement, createContext, useState, useEffect, useMemo, useLayoutEffect } from 'react' 
+import { createElement, useState, useEffect  } from 'react'
 import { useTimeAuto } from  '@/hooks/useTimeAuto'
-import { useFullscreen } from  '@/hooks/useFullscreen'
+import { useFullScreen } from '@/hooks/useFullScreen'
+import { useHover, useClick } from  '@/hooks/useEvents'
 import { useMemoize, useMemoizedFn } from  '@/hooks/useMemoize'
-import { useCreation, useUpdate, useActive } from  '@/hooks/useUpdate' 
-import { useHover, useClick } from  '@/hooks/useEvents' 
-import { usePagination } from  '@/hooks/usePagination' 
-import { useObserver } from  '@/hooks/useObserver' 
+import { useCreation, useUpdate, useActive } from  '@/hooks/useUpdate'
+import { usePagination } from  '@/hooks/usePagination'
+import { useObserver } from '@/hooks/useObserver'
+import { useMergedRef } from '@/hooks/useMergedRef'
+import { onUUID } from './common'
 
-import { onGetUUID } from './common'
+
+
 
 export { 
     useClick,
@@ -18,11 +21,12 @@ export {
     useActive,
     useUpdate,
     useCreation, 
+    useMergedRef,
 
     useObserver,
     useTimeAuto, 
     usePagination, 
-    useFullscreen,  
+    useFullScreen,  
     useMemoize, 
     useMemoizedFn,
 }
@@ -43,7 +47,7 @@ export const useUid = (name)=> {
     const [uid, setUid] = useState();
     
     useEffect(() => {
-        setUid(onGetUUID(name));
+        setUid(onUUID(name));
     }, []);
 
     return uid
@@ -73,3 +77,4 @@ export const useFindIcon = (deps={})=>{
         }catch(e){  console.log('Error:(useFindIcon):'+ String(e)); return null }
     })
 }
+

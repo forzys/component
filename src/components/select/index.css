@@ -49,7 +49,7 @@
 
 .select-box .select-item[data-disabled] {
     cursor: not-allowed;
-    color: rgb(144, 146, 150);
+    color: rgb(144, 146, 150); 
 }
 
 .select-box .select-item[data-active]{

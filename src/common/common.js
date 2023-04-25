@@ -1,6 +1,4 @@
 
-
-
 export function numberFormat(num = '', decimals = 2, info) {
 	const { pre = '', suf = '', currency = true, init = '-' } = typeof info === 'object' ? info : { currency: false };
 	if (num === '' || num === null || Number.isNaN(+num)) {
@@ -16,6 +14,7 @@ export function numberFormat(num = '', decimals = 2, info) {
 	return pre + text + suf
 }
 
+
 /**
  * 获取文件base64编码
  */
@@ -30,16 +29,18 @@ export function onGetBase64(file) {
 }
 
 
-export function onGetUUID (name = ''){
+
+export function onUUID (name = ''){
     const uid = Math.random().toString(36).slice(2, 11)
     return name ? name + uid.slice(-7) : uid
 }
 
 
+
+
 export function classes(init, ...names){
     return [init, ...names]?.filter(Boolean).join(' ');
 }
-
 
 
 
@@ -56,16 +57,28 @@ function getScroll(win, top) {
             ret = doc.body[met];
         }
     }
+
     return ret;
 }
 
-export function offset(el) {
+
+export function offset(el){
     const rect = el.getBoundingClientRect();
     const pos = { left: rect.left,  top: rect.top };
     const doc = el.ownerDocument;
     const win = doc.defaultView || doc.parentWindow;
-    
+
     pos.top += getScroll(win, true);
-    pos.left += getScroll(win, false);
+    pos.left +=getScroll(win, false);
     return pos;
-  }
+}
+
+
+export function onCookie(name){
+    return `; ${document.cookie}`.split(`; ${name}=`).pop().split(';').shift();
+}
+
+
+
+
+

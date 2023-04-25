@@ -4,10 +4,11 @@ import './index.css'
 import { useUpdate, useCreation, useMemoizedFn } from "@/common/hooks";
 
 
-export default memo((props)=> { 
+
+export default memo((props)=> {
     const refs = useRef({})
     const [state, setState] = useUpdate({})
-
+  
     useLayoutEffect(()=>{
         if(!!refs.current.after){
             const element = refs.current.after;
@@ -19,10 +20,10 @@ export default memo((props)=> {
             const rect = element.getBoundingClientRect();
             state.beforePadding = `calc(${rect?.width}px + 0.35rem)`; 
         }
-        !!(refs.current.after || refs.current.before) && setState({ ...state });
+        // !!(refs.current.after || refs.current.before) && setState({ ...state }), console.log('Update Input of EFF');
     },[props.after, props.before])
   
-    const styles = useCreation(()=>{
+    const styles = useMemo(()=>{
         return {
             paddingLeft: state.beforePadding || undefined,
             paddingRight: state.afterPadding || undefined, 
@@ -30,12 +31,13 @@ export default memo((props)=> {
         }
     },[state.beforePadding, state.afterPadding, props.style])
  
-
-
-    const onChange = useMemoizedFn((name, e)=>{
+    const onChange = useCallback((name, e)=>{
         e.stopPropagation(); 
         !!(props[name]) && props?.[name]?.(e)
-    });
+    },[]);
+
+    console.log('IPUT',{ props,  })
+
 
     return (
         <div
@@ -63,6 +65,7 @@ export default memo((props)=> {
                 type={props.type || undefined}
                 readOnly={props.readOnly}
                 autoComplete="off"
+                // ref={innerRef}
                 value={props.value}
                 onClick={props?.onClick}
                 onBlur={props.onBlur}
@@ -80,3 +83,4 @@ export default memo((props)=> {
     )
 
 })
+

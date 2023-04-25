@@ -20,10 +20,10 @@ export default memo((props)=>{
 
 
     return (
-        <button 
-            data-disabled={props.disabled} 
+        <button
             role="switch" 
             onClick={onChecked} 
+            data-disabled={props.disabled}
             className={classes('btn-switch', checked && 'switch-checked')}
         >
             <div className="switch-handle">

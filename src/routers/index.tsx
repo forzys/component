@@ -2,53 +2,57 @@
 
 
 
-
+import React, { Suspense } from 'react'
 // * 导入所有router
-// const metaRouters = import.meta.globEager("src/pages/*.tsx");
-
-
-
-import { Navigate, useRoutes } from "react-router-dom";
-
-import { lazy } from "react";
-
+import { Navigate, useRoutes, createBrowserRouter, RouterProvider } from "react-router-dom";
+import type { RouteObject } from "react-router-dom";
 import { RouteItem } from "@/interface/interface"
-
+import Spining from '@/components/spining' 
 import Routes from './router.config'
 
 // const Routes:RouteItem[] = require('./router.config');
-import Login from "@/pages/login/index"
+// import Login from "@/pages/login/index"
+// import PageError from "@/pages/404"
 
-export const rootRouter: RouteItem[] = [
-    {
-		path: "/", 
-        element: <Login />
-        // component: '/login/index',
-	},
-    ...Routes,
-    {
-		path: "*",
-		component: '/404'
-	}
-]
-
-
-const onRouters = (routers:RouteItem[]) => { 
-    return routers?.map((item: RouteItem)=>{
-        return  {
-            // ...item,
-            path: item?.path,
-            element: item?.element 
-            //  <Element />
-        }
-    }) 
+function LazyLoad(Component: React.LazyExoticComponent<any>): React.ReactNode {
+    return (
+        <Suspense fallback={<Spining />}>
+            <Component />
+        </Suspense>
+    )
 }
 
-const item = onRouters(rootRouter)
 
-export default ()=>{
-  
-    const items = useRoutes( item  );
+function Loader(routers: RouteItem[]): RouteObject[] {
+    return routers?.map((item: RouteItem)=> {
+        const component = (item.component || '@/pages/404').replace('@', '..');
+        return {
+            path: item?.path,
+            element: LazyLoad(React.lazy(() => import(component))),
+            // component: item.component,
+            children: Array.isArray(item?.children) ? Loader(item?.children) : undefined
+        }
+    })
+}
 
-    return items
+const router = createBrowserRouter(Loader(Routes));
+
+// const onRouters = (routers:RouteItem[]) => { 
+//     return routers?.map((item: RouteItem)=>{
+//         return  {
+//             // ...item,
+//             path: item?.path,
+//             element: item?.element 
+//             //  <Element />
+//         }
+//     }) 
+// }
+// const item = onRouters(rootRouter)
+
+export default () => {
+    // console.log({ router }); 
+    // console.log({ Routes });
+
+    return <RouterProvider router={router} />
+    // return <RouterProvider router={router} />
 }

@@ -6,7 +6,7 @@ import { useEffect, useState, CSSProperties,memo, useMemo } from 'react'
 import Timing from '@/components/timing' 
 import Stretch from '@/components/stretch' 
 import Spining from '@/components/spining' 
-import Figure from '@/components/figure' 
+import Figure from '@/components/figure'
 import Switch from '@/components/switch' 
 import Button from '@/components/button'
 import Groups from '@/components/group'
@@ -15,10 +15,10 @@ import Tooltip from '@/components/tooltip'
 import Pagination from '@/components/pagination'
 import Input from '@/components/input'
 import Select from '@/components/select'
-import Modal from '@/components/modal'
+// import Modal from '@/components/modal'
 
 import { Direction, Media, Configure, Official, Symbol, Loading, Weather,Search, Screen} from '@/components/icons' 
-import { useMemoizedFn, useFullscreen, useCreation, usePagination, useUpdate } from '@/common/hooks' 
+import { useMemoizedFn, useFullScreen, useCreation, usePagination, useUpdate } from '@/common/hooks' 
 import { useFetch, apis } from '@/request/index'
 
 interface CustomCSS extends CSSProperties {
@@ -34,10 +34,10 @@ interface CustomState {
     inputType?:string|number|null;
 }
 
-export default ()=>{
-    const [http] = useFetch()
-    const [isFull, onToggle] = useFullscreen()
-    const [state, setState] = useUpdate({ loading: true })
+export default memo((props)=>{
+    const [http] = useFetch() 
+    const [isFull, onToggle] = useFullScreen()
+    const [state, setState, { navigate }] = useUpdate({ loading: true })
     const pagination = usePagination({ total: 20, init: 1 })
     
 
@@ -84,6 +84,11 @@ export default ()=>{
         state.mode = !!state.mode ? 0 : 1
     }
 
+ 
+    const onGotoSummary = ()=>{ 
+        navigate('/summary')
+        console.log({ props, navigate })
+    }
 
     console.log('First:::', state )
   
@@ -158,6 +163,7 @@ export default ()=>{
                             /> 
 
                             <Select 
+                                clearable
                                 option={[
                                     {label: 'list1', value: 'list1'},
                                     {label: 'list2', value: 'list2', disabled: 1},
@@ -185,8 +191,7 @@ export default ()=>{
                         </Groups>
 
                         <Groups> 
-                            <Symbol close />
-                            {/* <Button icon='close' /> */}
+                            <Symbol close /> 
                             <Symbol close-o />
                             <Symbol check  />
                             <Symbol minus  />
@@ -292,14 +297,27 @@ export default ()=>{
                     </div>
 
                     <div>
+
+
                         <Figure 
-                            img="https://t8.baidu.com/it/u=3297273922,3348521994&fm=218&app=126&size=f242,150&n=0&f=JPEG&fmt=auto?s=BA81A14C8BA0BD4308F5D10B0000E0C1&sec=1681491600&t=0a363ddbfcfc830e10038a0ed04be108" 
                             title="774×1186 131 KB" 
+                            img="https://t8.baidu.com/it/u=3297273922,3348521994&fm=218&app=126&size=f242,150&n=0&f=JPEG&fmt=auto?s=BA81A14C8BA0BD4308F5D10B0000E0C1&sec=1681491600&t=0a363ddbfcfc830e10038a0ed04be108" 
                         />
+
+                        <Groups>
+                            <Button onClick={onGotoSummary}> Go to Summary</Button>
+                            <Button type="text"> AAAA</Button>
+                            <Button type="primary"> BBBB</Button>
+                            <Button type="danger"> CCCC</Button> 
+
+                            <Button type="primary" outline> BBBB</Button>
+                            <Button type="danger" outline> CCCC</Button>
+                        </Groups>
+                       
                     </div>
                     
                 </div>
             </Spining> 
         </Stretch>  
     )
-}
+})

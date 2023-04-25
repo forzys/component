@@ -1,8 +1,7 @@
 
-import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"; 
+import React, { memo, useLayoutEffect, useMemo, useRef, useState } from "react"; 
 import { useUpdate, useHover } from "@/common/hooks";
 import './index.css'
-
 
 
 export default memo((props)=>{ 
@@ -11,7 +10,6 @@ export default memo((props)=>{
     const labelRef = useRef(null);
     const timer = useRef(null);
 
-  
     useLayoutEffect(()=>{
         if(hoverRef.current && hovered && !props.disabled){
             const element = hoverRef.current
@@ -43,8 +41,8 @@ export default memo((props)=>{
                 setActive({ hovered: false });
             }, 300) 
         }
-        
     },[hovered, props.disabled]) 
+
 
     const hoverStyle = useMemo(()=>{ 
         return {
@@ -52,26 +50,25 @@ export default memo((props)=>{
             transitionDuration: '250ms',
             transitionTimingFunction: 'ease',
             opacity: active.opacity,
-            zIndex: 300,
             top: active.top,
             left: active.left,
+            zIndex: 300,
         }
     },[active])
 
-
     return (
         <React.Fragment>
+            <span ref={hoverRef}>
+                {props.children}
+            </span>
+
             {
-                !props.disabled &&
-                !!(hovered || active.hovered) && (
+                !props.disabled && !!(hovered || active.hovered) && (
                     <div ref={labelRef} className="tooltip" style={hoverStyle}>
                         {props.label}
                     </div>
                 )
             }
-            <span ref={hoverRef}>
-                {props.children}
-            </span>
         </React.Fragment>
     )
 

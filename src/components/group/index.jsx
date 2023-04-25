@@ -8,7 +8,7 @@ export default memo((props)=>{
         <div 
             className={classes("group", props.className)} 
             style={props.style} 
-            onClick={e=>(e?.stopPropagation(), props?.onClick?.(e))}
+            onClick={e=>[e?.stopPropagation(), props?.onClick?.(e)]}
         >
             {Children?.toArray(props.children).filter(Boolean)}
         </div>

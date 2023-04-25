@@ -3,7 +3,13 @@
 
 import { useEffect, useState } from "react";
 
-export const useFullscreen = () => {
+
+/**
+ * useFullScreen
+ *  
+ */
+
+export function useFullScreen () {
 	const [isFullscreen, setIsFullscreen] = useState(false);
 
 	useEffect(() => {

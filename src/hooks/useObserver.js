@@ -2,7 +2,12 @@
 
 
 import  { useState, useMemo, useRef, useEffect } from "react"
-import useCreation from "./useUpdate";
+ 
+
+/**
+ * useObserver：监听元素大小的变化
+ * 功能： 元素大小发生变化执行重渲染
+ */
 
 export function useObserver() {
     const ids = useRef(0);
@@ -22,7 +27,7 @@ export function useObserver() {
         right: 0, 
     });
   
-    const observer = useCreation(() => {
+    const observer = useMemo(() => {
         return new ResizeObserver((entries) => {
             const entry = entries[0];
             if (entry) {
@@ -33,12 +38,15 @@ export function useObserver() {
     }, []);
 
     useEffect(() => {
-        ref.current && observer.observe(ref.current);
+        ref.current && 
+        observer.observe(ref.current);
+
         return () => {
             observer?.disconnect();
-            ids.current && cancelAnimationFrame(ids.current);
+            ids.current && 
+            cancelAnimationFrame(ids.current);
         }
     }, [ref.current]);
   
-    return useCreation(()=>[ref, rect],[rect]);
+    return [ref, rect]
 }

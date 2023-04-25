@@ -26,7 +26,6 @@ export default memo((props)=>{
         } 
     },[props.open, active])
   
-
     return (
         <ActivePortal>
             <div className="modal-root">

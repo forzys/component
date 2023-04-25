@@ -1,16 +1,15 @@
 import { memo, useLayoutEffect, useRef, useMemo } from "react";
 import ActivePortal from '@/components/portal'
-import { Symbol } from '@/components/icons' 
-import { useUpdate, useHover, useMemoizedFn } from "@/common/hooks";
 import Input from "@/components/input";
 import Button from "@/components/button";
+import { Symbol } from '@/components/icons' 
+import { useUpdate, useHover, useMemoizedFn } from "@/common/hooks";
 import './index.css'
  
 export default memo((props)=>{ 
-    const [hoverRef, hovered] = useHover()
-    const [state, setState] = useUpdate({})
-    const [position, setPosition] = useUpdate({})
-    const labelRef = useRef(null);
+    const [hoverRef, hovered] = useHover();
+    const [state, setState] = useUpdate({});
+    const [position, setPosition] = useUpdate({});
     const timer = useRef(null);
    
     const onExtraChange = useMemoizedFn(()=>{
@@ -54,7 +53,9 @@ export default memo((props)=>{
                 setPosition({ hovered: false });
             }, 300) 
         }
-        
+        return ()=>{
+            state.timer && clearTimeout(state.timer)
+        }
     },[state?.open, props.disabled]) 
 
 
@@ -65,17 +66,16 @@ export default memo((props)=>{
     })
 
 
-    const onDropDownClose = useMemoizedFn(()=>{
-        console.log('open', hoverRef.current) 
+    const onDropDownClose = ()=>{
         state.open && setState({ open: false })
-    })
+    }
 
     const onActiveSelect = useMemoizedFn((info)=>{
-        console.log('open', info)
+        console.log('click', info)
 
         setState({ active: info.label })
 
-    })
+    }) 
 
     const hoverStyle = useMemo(()=>{ 
         return {
@@ -93,6 +93,7 @@ export default memo((props)=>{
         }
     },[position])
 
+    console.log('HOVERD:',hovered)
 
     return (
         <div onClick={(e)=>e.stopPropagation()} ref={hoverRef}> 
@@ -103,16 +104,17 @@ export default memo((props)=>{
                     <Button type="text" compact onClick={onExtraChange}>
                         {
                             hovered && props.clearable ?
-                            <Symbol close-o thems="rgba(0,0,0,0.45)" color="#fff" fontSize="13px" />:
+                            <Symbol close-o thems="rgba(0,0,0,0.45)" color="#ccc" fontSize="13px" />:
                             <Symbol down color='rgba(0,0,0,0.25)' />
                         } 
                     </Button>
                 )}
                 readOnly
                 inputClass="select-input"
-                open={state?.open || undefined}
-                onClick={onDropDownOpen}
+                // ref={inputRef}
                 onBlur={onDropDownClose}
+                open={state?.open || undefined}
+                onClick={onDropDownOpen} 
                 value={state?.active || ''}
             />
 
@@ -120,7 +122,7 @@ export default memo((props)=>{
                 <div className="select-dropdown" style={{ display: (state?.open || position?.hovered) ? 'block' : 'none',...hoverStyle,}}>
                     <div style={{ maxHeight:'13rem',display:'flex' }}>
 
-                        <div style={{ position:'relative', width: '100%', flex: 1}} ref={labelRef}>
+                        <div style={{ position:'relative', width: '100%', flex: 1}}>
                             <style>{`[data-radix-scroll-area-viewport]{scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;}[data-radix-scroll-area-viewport]::-webkit-scrollbar{display:none}`}</style>
 
                             <div className="select-box" data-radix-scroll-area-viewport style={{ overflow:'scroll'}}>
@@ -134,7 +136,7 @@ export default memo((props)=>{
                                                         key={item.value || item.label}
                                                         data-disabled={item.disabled || undefined}
                                                         data-active={String(state.active)?.includes(item.value) || undefined}
-                                                        onClick={!item.disabled && onActiveSelect.bind(null,item)}
+                                                        onClick={!item.disabled ? onActiveSelect.bind(null,item): undefined }
                                                     >
                                                         <span>{item.label}</span>
                                                     </div>

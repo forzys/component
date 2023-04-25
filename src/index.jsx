@@ -1,13 +1,9 @@
 
 
-import { BrowserRouter } from "react-router-dom";
+
+
 import Router from "@/routers/index";
+import { memo } from "react";
 
+export default memo(()=><Router />)
 
-export default (props)=>{ 
-    return (
-        <BrowserRouter>
-            <Router />
-        </BrowserRouter>
-    )
-}

@@ -21,7 +21,7 @@ export interface RouteItem {
 	isLink?: string;
 	index?: boolean|number|string;
 	redirect?: string|boolean;
-	component?: string|React.ReactNode;
+	component?: string;
 	children?: RouteItem[];
 	element?: string|React.ReactNode;
 	caseSensitive?: boolean;

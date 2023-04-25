@@ -31,7 +31,6 @@ export default memo((props)=>{
             <Button disabled={pagination.active === props.total} onClick={()=>pagination.next()}>
                 <Direction right strokeWidth="3" color ='#000'   />
             </Button>
-             
         </div>
     )
 })

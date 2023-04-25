@@ -3,27 +3,20 @@
 
 import { useMemo,  useState } from 'react'; 
 import { useMemoizedFn } from  '@/hooks/useMemoize'
-
-export function useUncontrolled({ value, init, final, onChange = () => {} }) {
-	const [state, setState] = useState(init !== undefined ? init : final);
-
-	const handleChange = (val) => {
-		setState(val);
-		onChange?.(val);
-	};
-
-	if (value !== undefined) {
-		return [value, onChange, true];
-	};
-
-	return [state, handleChange, false];
-}
+import { useActive } from  '@/hooks/useUpdate'
 
  
+
+
+/**
+ * usePagination: 分页函数
+ * 功能 分页逻辑
+ */
+
 export function usePagination(props) {
 	const { total, siblings = 1, boundaries = 1, page, init = 1, onChange } = props
 	const [_total, DOTS] = useMemo(()=>[Math.max(Math.trunc(total), 0),'dots'],[total]);
-    const [active, setActive] = useUncontrolled({ value: page, onChange, init: init, final: init });
+    const [active, setActive] = useActive({ value: page, onChange, init: init, final: init });
 
 	const ranges = useMemoizedFn((start, end)=>{
 		const length = end - start + 1;

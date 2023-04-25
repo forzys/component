@@ -6,15 +6,13 @@ import { useMemo, useCallback } from "react";
 
 const weeks = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')
  
-export const useTimeAuto = () => { 
-    const appendZero = (obj) => obj < 10 ? "0" + obj : obj;
+export function useTimeAuto (){
+    const appendZero = useCallback((obj) => (obj < 10 ? "0" + obj : obj), []);
 
     const date = useMemo(()=>{
-		const now = new Date()
-        const day = now.getDay()
-        const week = weeks[day];
-        const arrs = [appendZero(now.getMonth() + 1), appendZero(now.getDate()), now.getFullYear()]
-        const date = arrs?.join('/');
+		const now = new Date();
+        const week = weeks[now.getDay()];
+        const date = [appendZero(now.getMonth() + 1), appendZero(now.getDate()), now.getFullYear()]?.join('/')
         return [date, week];
     },[])
 

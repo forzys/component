@@ -1,7 +1,8 @@
 
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState } from "react";
 import { useMemoizedFn } from "./useMemoize";
+import { useNavigate } from 'react-router-dom'
 
 const depsAreSame = (oldDeps, deps) => { 
     if(oldDeps === deps) return true;
@@ -10,6 +11,14 @@ const depsAreSame = (oldDeps, deps) => {
     }
     return true
 }
+
+
+
+/**
+ * useCreation： = useMemo
+ * useUpdate： = useState
+ * useActive： = 外部可接管控制器  传入value则 【value onChange控制】 或 内部控制
+ */
 
 export const useCreation = (fn, deps)=> {
     const { current } = useRef({ 
@@ -27,7 +36,9 @@ export const useCreation = (fn, deps)=> {
     return current.obj
 }
 
+
 export const useUpdate = (initialState)=> {
+    const navigate = useNavigate()
     const [state, setState] = useState(initialState);
 
     const onForceUpdate = useMemoizedFn((...[partial, delay]) => {
@@ -41,13 +52,12 @@ export const useUpdate = (initialState)=> {
         })
     });
 
-    return [state, onForceUpdate];
+    return [state, onForceUpdate, { navigate }];
 }
 
 
-
-export const useActive = ({ value, init, onChange }) => { 
-    const [active, setActive] = useState(init);
+export const useActive = ({ value, init, final, onChange }) => { 
+    const [active, setActive] = useState(init !== undefined ? init : final);
 
     const onHandleChange = (e) => {
         setActive(e), onChange?.(e);
