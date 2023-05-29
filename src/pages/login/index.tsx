@@ -94,7 +94,7 @@ export default memo((props)=>{
   
     return (
         <Stretch onChange={onChange} open={false} style={{ padding: 48 }} id="draw" className="frosted">
-            <Spining loading={ state?.loading }> 
+            <Spining loading={state?.loading }> 
                 <div style={{display:'flex'}}>
 
                     <div style={{ width: 700, textAlign:'left' }}> 
@@ -145,10 +145,7 @@ export default memo((props)=>{
                                 before={[
                                     <Segment 
                                         fontSize="0.1rem"
-                                        options={[
-                                            {label: 'apple', value: 'apple'},
-                                            {label: 'funct', value: 'funct'},
-                                        ]}
+                                        options={[ 'apple', 'funct' ]}
                                     />,
                                     <Search fontSize="18px" search />
                                 ].find((n,i)=> Number(state?.inputType === 'segment') === i)}
@@ -178,8 +175,9 @@ export default memo((props)=>{
   
                         <Groups> 
                             <Loading className='spinner-icon' type="1" /> 
-                            <Loading type="3" className='spinner-icon2' />
-                            <Loading type="2" className='spinner-icon2' fontSize="22px"  /> 
+                            <Loading type="3" className='spinner-zoom' />
+                            <Loading type="2" className='spinner-icon2 ' fontSize="22px"  /> 
+                             
                         </Groups>
 
                         <Groups> 

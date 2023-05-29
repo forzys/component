@@ -4,8 +4,7 @@ import { useMemo } from "react"
 export const useFetch = () => {
 
     const http = useMemo(()=>{
-        return {
-
+        return { 
             get: (url, option)=> new Promise((resolve)=>{
                 return fetch(url)
                 ?.then((res)=> res?.json())

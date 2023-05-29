@@ -1,4 +1,11 @@
 
+
+
+
+
+
+
+
 export function numberFormat(num = '', decimals = 2, info) {
 	const { pre = '', suf = '', currency = true, init = '-' } = typeof info === 'object' ? info : { currency: false };
 	if (num === '' || num === null || Number.isNaN(+num)) {
@@ -29,13 +36,10 @@ export function onGetBase64(file) {
 }
 
 
-
 export function onUUID (name = ''){
     const uid = Math.random().toString(36).slice(2, 11)
     return name ? name + uid.slice(-7) : uid
 }
-
-
 
 
 export function classes(init, ...names){
@@ -43,13 +47,28 @@ export function classes(init, ...names){
 }
 
 
+// export function onCookie(name){
+//     return `; ${document.cookie}`.split(`; ${name}=`).pop().split(';').shift();
+// }
 
-function getScroll(win, top) {
-    const nameX = top ? 'Y' : 'X'
-    const nameT = top ? 'Top' : 'Left'
-    let ret = win[`page${nameX}Offset`] 
-    let met = `scroll${nameT}`;
 
+export const onCookie = name => `; ${document.cookie}`.split(`; ${name}=`).pop().split(';').shift();
+
+
+export const transpose = (matrix) => matrix[0].map((col, i) => matrix.map((row) => row[i]));
+// transpose(
+//     [              // [
+//         [1, 2, 3], //      [1, 4, 7],
+//         [4, 5, 6], //      [2, 5, 8],
+//         [7, 8, 9], //      [3, 6, 9],
+//      ]             //  ]
+//  ); 
+
+function onGetScroll(win, top) {
+    const [x, t] = top ? ['Y', 'Top'] : ['X', 'Left']
+    let [ret, met] = [`page${x}Offset`, `scroll${t}`] 
+
+    ret = win[ret]
     if (typeof ret !== 'number') {
         const doc = win.document;
         ret = doc.documentElement[met];
@@ -68,15 +87,37 @@ export function offset(el){
     const doc = el.ownerDocument;
     const win = doc.defaultView || doc.parentWindow;
 
-    pos.top += getScroll(win, true);
-    pos.left +=getScroll(win, false);
+    pos.top += onGetScroll(win, true);
+    pos.left +=onGetScroll(win, false);
     return pos;
 }
 
 
-export function onCookie(name){
-    return `; ${document.cookie}`.split(`; ${name}=`).pop().split(';').shift();
-}
+export const mediator = (function () {
+    let topics = [], uuid = 0;
+
+    function subscribe (topic, callback) {
+        uuid ++
+        topics[topic] = topics[topic]
+            ? [...topics[topic], { callback, uuid }]
+            : [{ callback, uuid }]
+    }
+
+    function publish (topic, value) {
+        if (topics[topic]) {
+            topics[topic].map(item => item.callback(value))
+        }
+    }
+
+    return {
+        install: function (obj) {
+            obj.uuid = uuid
+            obj.publish = publish
+            obj.subscribe = subscribe
+            return obj
+        } 
+    }
+})()
 
 
 

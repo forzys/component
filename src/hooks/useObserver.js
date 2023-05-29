@@ -50,3 +50,25 @@ export function useObserver() {
   
     return [ref, rect]
 }
+
+
+
+function MeasureExample() {
+    const [entry, setEntry] = useState();
+    
+    const measuredRef = useCallback((node) => {
+      const observer = new ResizeObserver(([entry]) => {
+        setEntry(entry)
+      })
+  
+      observer.observe(node)
+      // 解绑事件
+      return () => {
+        observer.disconnect()
+      }
+    }, [])
+
+
+    return [entry,measuredRef]
+   
+  } 

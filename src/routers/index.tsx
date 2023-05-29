@@ -26,9 +26,10 @@ function LazyLoad(Component: React.LazyExoticComponent<any>): React.ReactNode {
 function Loader(routers: RouteItem[]): RouteObject[] {
     return routers?.map((item: RouteItem)=> {
         const component = (item.component || '@/pages/404').replace('@', '..');
+        console.log({ component })
         return {
             path: item?.path,
-            element: LazyLoad(React.lazy(() => import(component))),
+            element: LazyLoad(React.lazy(() => import(component  /* @vite-ignore */))),
             // component: item.component,
             children: Array.isArray(item?.children) ? Loader(item?.children) : undefined
         }

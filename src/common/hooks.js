@@ -10,10 +10,9 @@ import { useCreation, useUpdate, useActive } from  '@/hooks/useUpdate'
 import { usePagination } from  '@/hooks/usePagination'
 import { useObserver } from '@/hooks/useObserver'
 import { useMergedRef } from '@/hooks/useMergedRef'
-import { onUUID } from './common'
+import { onUUID, mediator } from './common'
 
-
-
+ 
 
 export { 
     useClick,
@@ -78,3 +77,27 @@ export const useFindIcon = (deps={})=>{
     })
 }
 
+
+// 事件订阅器
+export const useGetEvent = (topic) => {
+    const sub = mediator.install({});
+    const [data, setData] = useState(0);
+    sub.subscribe(topic, setData);
+    return data;
+};
+
+// 事件发布器
+export const useSetEvent = (topic, value) => {
+    const sub = mediator.install({});
+    useEffect(() => sub.publish(topic, value), [value]);
+    return [];
+};
+
+// App.js
+// const [count, setCount] = useState(0);
+// useSetEvent("count", count);
+
+// child.js
+// const sub = useGetEvent("count");
+// useEffect(() => console.log(sub), [sub]);
+ 
