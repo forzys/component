@@ -10,6 +10,28 @@ import { RouteItem } from "@/interface/interface"
 import Spining from '@/components/spining' 
 import Routes from './router.config'
 
+import Login from '@/pages/login/index'
+import Summary from '@/pages/summary/index'
+import NotFound from '@/pages/404.jsx'
+
+const routers = [
+   {
+       path: "/",
+       component: '@/pages/login/index',
+       element: <Login />,
+   },
+   {
+       path: "/summary",
+       component: '@/pages/summary/index',
+       element: <Summary />,
+   },
+   {
+       path: "*", 
+       component: '@/pages/404.jsx',
+       element: <NotFound />,
+   },
+]
+
 // const Routes:RouteItem[] = require('./router.config');
 // import Login from "@/pages/login/index"
 // import PageError from "@/pages/404"
@@ -23,20 +45,26 @@ function LazyLoad(Component: React.LazyExoticComponent<any>): React.ReactNode {
 }
 
 
-function Loader(routers: RouteItem[]): RouteObject[] {
-    return routers?.map((item: RouteItem)=> {
-        const component = (item.component || '@/pages/404').replace('@', '..');
-        console.log({ component })
-        return {
-            path: item?.path,
-            element: LazyLoad(React.lazy(() => import(component))),
-            // component: item.component,
-            children: Array.isArray(item?.children) ? Loader(item?.children) : undefined
-        }
-    })
-}
+// function Loader(routers: RouteItem[]): RouteObject[] {
+//     return routers?.map((item: RouteItem)=> {
+//         const component = (item.component || '@/pages/404').replace('@', '..');
+//         console.log({ component, item })
+//         return {
+//             path: item?.path,
+//             element: item?.element,
+//             // element: LazyLoad(React.lazy(() => import(component))),
+//             // component: item.component,
+//             children: Array.isArray(item?.children) ? Loader(item?.children) : undefined
+//         }
+//     })
+// }
+ 
+// console.log({ Routes })
 
-const router = createBrowserRouter(Loader(Routes));
+const router = createBrowserRouter( 
+    routers
+    // Loader(Routes) 
+    );
 
 // const onRouters = (routers:RouteItem[]) => { 
 //     return routers?.map((item: RouteItem)=>{
