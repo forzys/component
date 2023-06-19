@@ -18,7 +18,7 @@ export default defineConfig({
 		}
 	},
 
-	base: "/component/",
+	// base: "/component/",
 
 	build:{
 		outDir: 'docs', // 指定输出路径
