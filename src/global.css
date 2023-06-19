@@ -168,3 +168,44 @@ body.dark-mode {
 .read-the-docs {
   color: #888;
 }
+
+
+ 
+audio, canvas, embed, iframe, img, object, svg, video {
+    display: block;
+    vertical-align: middle;
+}
+* {
+  transition-property: background-color,border-color,color,fill,stroke;
+  transition-duration: .15s;
+}
+.theme-toggle {
+  border: none;
+  background: 0 0;
+  cursor: pointer;
+}
+.dark .dark\:text-gray-100 {
+  --tw-text-opacity: 1;
+  color: rgb(243 244 246/var(--tw-text-opacity));
+}
+
+.theme-toggle {
+  --theme-toggle__within--duration: 500ms;
+  --theme-toggle__simple--duration: 500ms;
+  --theme-toggle__lightbulb--duration: 500ms;
+  --theme-toggle__inner-moon--duration: 500ms;
+  --theme-toggle__horizon--duration: 500ms;
+  --theme-toggle__half-sun--duration: 500ms;
+  --theme-toggle__expand--duration: 500ms;
+  --theme-toggle__eclipse--duration: 500ms;
+  --theme-toggle__dark-side--duration: 500ms;
+  --theme-toggle__dark-inner--duration: 500ms;
+  --theme-toggle__classic--duration: 500ms;
+  --theme-toggle__around--duration: 500ms;
+}
+.theme-toggle input[type=checkbox] {
+  display: none;
+}
+.theme-toggle.theme-toggle--reversed .theme-toggle__classic{
+  transform: scaleX(-1);
+}
