@@ -29,7 +29,7 @@ function Loader(routers: RouteItem[]): RouteObject[] {
         console.log({ component })
         return {
             path: item?.path,
-            element: LazyLoad(React.lazy(() => import(component  /* @vite-ignore */))),
+            element: LazyLoad(React.lazy(() => import(component))),
             // component: item.component,
             children: Array.isArray(item?.children) ? Loader(item?.children) : undefined
         }
