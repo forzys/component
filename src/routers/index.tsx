@@ -28,7 +28,7 @@ const routers = [
    {
        path: "*", 
        component: '@/pages/404.jsx',
-       element: <NotFound />,
+       element: <Login />,
    },
 ]
 
