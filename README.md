@@ -3,7 +3,7 @@ Self-implemented component library
 
 ### 包含组件
 1. button
-2. figure
+2. figure 图片与预览
 3. group
 4. icons 收集整理
 5. input
