@@ -7,7 +7,7 @@ import { useRouteError } from "react-router-dom";
 
 export default memo((props) =>{
     const error = useRouteError();
-    console.error(error);
+    console.error(error, props);
 
     return (
         <div id="error-page">
