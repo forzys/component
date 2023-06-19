@@ -19,6 +19,7 @@ export default defineConfig({
 	},
 
 	build:{
+		outDir: 'docs', // 指定输出路径
 		rollupOptions:{
 			// external: ['react'],
 		  	// input:[],
