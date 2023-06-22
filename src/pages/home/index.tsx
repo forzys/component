@@ -115,6 +115,7 @@ export default memo((_props)=>{
                     before={<Search fontSize="18px" search />} 
                     after={<Button type="text" compact onClick={onChange}>Search</Button>} 
                     wrapStyle={{ width: '80%', }}
+                    style={{paddingRight: '4rem'}}
                     onChange={onInput}
                 /> 
 
