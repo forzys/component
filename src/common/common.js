@@ -109,17 +109,34 @@ export const mediator = (function () {
         }
     }
 
-    return {
+    function remove (topic, callback) {  
+        if (topics[topic]) { 
+            delete topics[topic]
+        }
+        callback();
+    }
+
+    function current (){
+        let arg = []
+        for(item in topics) 
+        arg.push(item)
+        return arg
+    }
+
+    return { 
         install: function (obj) {
+            obj.remove = remove
+            obj.current = current
             obj.uuid = uuid
             obj.publish = publish
-            obj.subscribe = subscribe
+            obj.subscribe = subscribe 
             return obj
         } 
     }
 })()
 
 
+ 
 
 
 
