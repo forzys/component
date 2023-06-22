@@ -13,6 +13,7 @@
 
 
 export default { 
+    analysis: 'https://46yun.free1.asia/',
     weibo: 'https://weibo.com/ajax/statuses/hot_band',
     holiday: 'https://raw.githubusercontent.com/NateScarlet/holiday-cn/master/$var.json'
 }
