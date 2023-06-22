@@ -1,25 +1,46 @@
 
-
-
- import Login from '@/pages/login/index'
- import Summary from '@/pages/summary/index'
- import NotFound from '@/pages/404.jsx'
- 
 const routers = [
     {
-        path: "/",
-        component: '@/pages/login/index',
-        element: <Login />,
+        path: "/", 
+        component: '@/layout/index.tsx',
+        // imm: import('@/layout/index'),
+        children:[
+            { 
+                index: true,
+            
+                component: '@/pages/home/index.tsx',
+                // component: import('@/pages/home/index'),
+            }, 
+            {
+                path: "/home",  
+                // index: true,
+                component: '@/pages/home/index.tsx',
+                // imm: import('@/pages/home/index'),
+         
+            }, 
+            {
+                path: "/component",
+                component: '@/pages/component/index.tsx',
+                // imm: import('@/pages/component/index'),
+        
+            },
+            {
+                path: "/wallpaper",
+                component: '@/pages/wallpaper/index.tsx',
+                // imm: import('@/pages/wallpaper/index'),
+            },
+            {
+                path: "/summary",
+                component: '@/pages/summary/index.tsx',
+                // imm: import('@/pages/summary/index'),
+            },
+        ]
     },
-    {
-        path: "/summary",
-        component: '@/pages/summary/index',
-        element: <Summary />,
-    },
+    
     {
         path: "*", 
 		component: '@/pages/404.jsx',
-        element: <NotFound />,
+        // imm: import('@/pages/404.jsx'),
     },
 ]
 

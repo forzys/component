@@ -8,63 +8,45 @@ import { Navigate, useRoutes, createBrowserRouter, RouterProvider } from "react-
 import type { RouteObject } from "react-router-dom";
 import { RouteItem } from "@/interface/interface"
 import Spining from '@/components/spining' 
-import Routes from './router.config'
+import Routes from './router.config' 
+// import Summary from '@/pages/summary/index'
+// import Home from '@/pages/home/index'
+// import Layout from '@/layout/index';
+// import NotFound from '@/pages/404.jsx'
 
-import Login from '@/pages/login/index'
-import Summary from '@/pages/summary/index'
-import NotFound from '@/pages/404.jsx'
+const modules:Record<string, () => Promise<any>> = import.meta.glob(['@/layout/*.tsx', '@/pages/*/index.tsx', '@/pages/404.jsx'])
 
-const routers = [
-   {
-       path: "/",
-       component: '@/pages/login/index',
-       element: <Login />,
-   },
-   {
-       path: "/summary",
-       component: '@/pages/summary/index',
-       element: <Summary />,
-   },
-   {
-       path: "*", 
-       component: '@/pages/404.jsx',
-       element: <Login />,
-   },
-]
-
-// const Routes:RouteItem[] = require('./router.config');
-// import Login from "@/pages/login/index"
-// import PageError from "@/pages/404"
-
+  
 function LazyLoad(Component: React.LazyExoticComponent<any>): React.ReactNode {
     return (
-        <Suspense fallback={<Spining />}>
+        <Suspense fallback={<Spining />}> 
             <Component />
         </Suspense>
     )
 }
 
 
-// function Loader(routers: RouteItem[]): RouteObject[] {
-//     return routers?.map((item: RouteItem)=> {
-//         const component = (item.component || '@/pages/404').replace('@', '..');
-//         console.log({ component, item })
-//         return {
-//             path: item?.path,
-//             element: item?.element,
-//             // element: LazyLoad(React.lazy(() => import(component))),
-//             // component: item.component,
-//             children: Array.isArray(item?.children) ? Loader(item?.children) : undefined
-//         }
-//     })
-// }
- 
-// console.log({ Routes })
+function Loader(routers: RouteItem[]): RouteObject[] {
+    return routers?.map((item: any )=> {
+        const path = item.component.replace('@', '/src'); 
+        const component = modules[path] 
+        console.log({ modules, item, component, path });
 
+        return {
+            path: item.path,
+            index: item.index, 
+            element: LazyLoad(React.lazy(modules[path])),
+            origin: item.component,
+            children: Array.isArray(item?.children) ? Loader(item?.children) : undefined
+        }
+    })
+}
+ 
+// console.log({ Routes }) 
 const router = createBrowserRouter( 
-    routers
-    // Loader(Routes) 
-    );
+    // routers
+    Loader(Routes) 
+);
 
 // const onRouters = (routers:RouteItem[]) => { 
 //     return routers?.map((item: RouteItem)=>{
