@@ -7,7 +7,7 @@ import './index.css'
 export default memo((props)=>{
     const onClick = useMemoizedFn((e)=>{
         e.stopPropagation();
-        props?.onClick?.(e)
+        props?.onClick?.(e, props)
     });
 
     return (
