@@ -209,3 +209,10 @@ audio, canvas, embed, iframe, img, object, svg, video {
 .theme-toggle.theme-toggle--reversed .theme-toggle__classic{
   transform: scaleX(-1);
 }
+
+
+
+.content{
+  width: 100vw;
+  height: 100vh;
+}
