@@ -44,6 +44,7 @@ export default memo((props)=> {
             onClick={e=> e?.stopPropagation()} 
             data-disabled={props.disabled || undefined}
             className={classes('input-wrap', props.className)} 
+            style={props.wrapStyle}
         >
             {
                 !!props.before &&

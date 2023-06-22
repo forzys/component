@@ -4,8 +4,7 @@
 
 
 import { memo, useState, useLayoutEffect, useRef, useEffect } from "react"
-import { useUid, useActive, useObserver, useCreation } from '@/common/hooks' 
-
+import { useUid, useActive, useObserver, useCreation, useMemoizedFn } from '@/common/hooks' 
 import './index.css'
 
  
@@ -107,9 +106,15 @@ export default memo((props)=>{
             transform:`translate(${position.translate[0]}px, ${position.translate[1]}px)`,
         }
     },[position])
+
+
+    const onChange = useMemoizedFn((item)=>{ 
+        setActive(item.value);
+        props?.onChange(item);
+    })
  
     return (
-        <div className="segment" ref={observerRef} onClick={e=>e.stopPropagation()}>
+        <div className="segment" ref={observerRef} onClick={e=>e.stopPropagation()} style={props?.style}>
             <span className="segment-active" style={activeStyle} />
             {
                 props.options?.map((i, j)=>{
@@ -124,7 +129,7 @@ export default memo((props)=>{
                                 id={`${uid}-${item.value}`}
                                 className="segment-item-input"
                                 checked={active === item.value}
-                                onChange={() => setActive(item.value)}
+                                onChange={onChange.bind(null, item)}
                             />
                             <label
                                 className='segment-item-label'

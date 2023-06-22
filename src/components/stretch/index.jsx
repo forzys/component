@@ -44,7 +44,7 @@ export default memo((props) => {
     },[props.open])
 
     return (
-        <div id={props?.id} onClick={props.onChange} className={props?.className} ref={drawer} style={{ width: baseWidth, height: baseHeight, ...props?.style }}>
+        <div id={props?.id || 'draw'} onClick={props.onChange} className={props?.className} ref={drawer} style={{ width: baseWidth, height: baseHeight, ...props?.style }}>
             {props?.children}
         </div>
     )
