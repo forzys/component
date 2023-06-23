@@ -1,15 +1,35 @@
-import { memo } from "react"; 
+import { memo, useEffect } from "react"; 
 import { Direction,Symbol } from '@/components/icons' 
-import { usePagination } from '@/common/hooks' 
+import { usePagination, useMemoizedFn} from '@/common/hooks' 
 import Button from '@/components/button'
 import './index.css' 
-
+ 
 
 export default memo((props)=>{
     const pagination = usePagination({ total: props.total })
+
+    const onChange = useMemoizedFn((type, item)=>{
+        let value
+        switch(type){
+            case 0 : value = pagination.page(item);
+                break;
+            case -1: value = pagination.prev();
+                break;
+            case 1 : value = pagination.next();
+                break;
+        }
+        props?.onChange?.(value);
+    });
+
+    useEffect(()=>{
+        if(props.page !== pagination.active){
+            pagination.page(props.page)
+        }
+    },[props.page])
+
     return (
         <div className="pagination-group" data-disabled={props.disabled} onClick={e=> e?.stopPropagation()}> 
-            <Button disabled={pagination.active <= 1} onClick={()=>pagination.prev()}>
+            <Button bordered={props.bordered} disabled={pagination.active <= 1} onClick={onChange.bind(null,-1)}>
                 <Direction left strokeWidth="3" color='#000' thems="#fff" />
             </Button>
             {
@@ -22,14 +42,19 @@ export default memo((props)=>{
                         ) 
                     }
                     return (
-                        <Button key={'page'+item}  className={pagination.active === item && 'active'} onClick={()=>pagination.page(item)}>
+                        <Button 
+                            key={'page'+item} 
+                            bordered={props.bordered} 
+                            className={pagination.active === item && 'active'}  
+                            onClick={onChange.bind(null,0, item)}
+                        >
                             <span> {item} </span>
                         </Button>
                     )
                 })
             }
-            <Button disabled={pagination.active === props.total} onClick={()=>pagination.next()}>
-                <Direction right strokeWidth="3" color ='#000'   />
+            <Button bordered={props.bordered} disabled={pagination.active === props.total} onClick={onChange.bind(null,1)}>
+                <Direction right strokeWidth="3" color ='#000'  />
             </Button>
         </div>
     )
