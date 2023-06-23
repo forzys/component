@@ -60,7 +60,7 @@ export const useActive = ({ value, init, final, onChange }) => {
     const [active, setActive] = useState(init !== undefined ? init : final);
 
     const onHandleChange = (e) => {
-        setActive(e), onChange?.(e);
+        setActive(e);
     };
  
     if (value !== undefined) {
