@@ -1,0 +1,35 @@
+
+
+
+.themes{ 
+    display:flex;
+    flex-wrap: wrap;
+    height: 65vh;
+    margin: 12px;
+    overflow:auto;
+    padding-bottom: 12px;
+}
+
+
+.themes .theme{
+    flex: 1;
+    margin: 12px;
+    margin-top: 0px;
+    margin-bottom: 36px;
+    border-radius: 8px;  
+}
+
+.theme .item{
+    font-size: 12px; 
+    margin-bottom:-12px;
+    border-radius: 8px;
+    padding: 18px 48px;
+    position: relative;   
+}
+
+.item span{
+    mix-blend-mode: difference; 
+    color: rgba(255,255,255, 0.85); 
+}
+ 
+ 
