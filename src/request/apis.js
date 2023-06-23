@@ -1,23 +1,11 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 export default { 
     analysis: 'https://46yun.free1.asia/',
     weibo: 'https://weibo.com/ajax/statuses/hot_band',
-    holiday: 'https://raw.githubusercontent.com/NateScarlet/holiday-cn/master/$var.json'
+    holiday: 'https://raw.githubusercontent.com/imm-o/holiday-cn/master/$var.json',
+    themes: 'https://raw.githubusercontent.com/imm-o/themes/main/themes/$type/$var.json'
 }
-
 
 
 
