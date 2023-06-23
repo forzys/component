@@ -16,7 +16,7 @@ import Pagination from '@/components/pagination'
 import Input from '@/components/input'
 import Select from '@/components/select'
 // import Modal from '@/components/modal'
-
+import Card from "@/components/card";
 import { Direction, Media, Configure, Official, Symbol, Loading, Weather,Search, Screen} from '@/components/icons' 
 import { useMemoizedFn, useFullScreen, useCreation, usePagination, useUpdate } from '@/common/hooks' 
 import { useFetch, apis } from '@/request/index'
@@ -93,10 +93,12 @@ export default memo((props)=>{
     console.log('First:::', state )
   
     return (
-        <Stretch onChange={onChange} open={false} style={{ padding: 48 }} id="draw" className="frosted">
-            <Spining loading={state?.loading }> 
-                <div style={{display:'flex'}}>
+        <div className='main'>
 
+<Card title="自定义组件"> 
+            <Spining loading={state?.loading }> 
+                <div style={{display:'flex'}}> 
+          
                     <div style={{ width: 700, textAlign:'left' }}> 
                         <div>
                             <div>
@@ -316,6 +318,8 @@ export default memo((props)=>{
                     
                 </div>
             </Spining> 
-        </Stretch>  
+        </Card>  
+
+        </div> 
     )
 })
