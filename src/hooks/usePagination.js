@@ -25,13 +25,26 @@ export function usePagination(props) {
 
 	const pageFunc = useMemo(()=>{
 		const setPage = (page) =>{
-			page <= 0 && setActive(1);
-			page > _total && setActive(_total);
-			page <= _total && page > 0 && setActive(page)
+			let index
+
+			if(page <= 0){
+				index = 1
+			}
+
+			if(page > _total){
+				index = _total
+			}
+
+			if(page > 0 && page <= _total){
+				index = page
+			}
+		 
+			setActive(index)
+			return index
 		}
 
 		return {
-			page:setPage,
+			page: setPage,
 			first:()=>setPage(1),
 			last:()=>setPage(_total),
 
