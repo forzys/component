@@ -47,7 +47,7 @@
 }
 
 .btn-item[data-type^=text]:hover{
-    color: rgba(0,0,0,.88);
+    /* color: rgba(0,0,0,.88); */
     background-color: rgba(0,0,0,.06);
 }
 
@@ -56,11 +56,12 @@
     background-color: transparent;
     border: 1px solid transparent;
     line-height: 1.57;
-    color: rgba(0,0,0,.88);
+    /* color: rgba(0,0,0,.88); */
+    color: inherit;
 }
 
 .btn-item[data-type^=primary]{
-    --btn-color: #1677ff;
+    --btn-color: var(--btn-primary-color);
     --btn-hover-color: #4096ff;
 
     color: #fff;
@@ -68,9 +69,9 @@
     box-shadow: 0 2px 0 rgba(5,145,255,.1);
 }
 .btn-item[data-type^=danger]{
-    --btn-color: #ff4d4f; 
-    --btn-hover-color: #ff7875;
-
+    --btn-color: var(--btn-danger-color); 
+    --btn-hover-color: var(--btn-hover-danger-color);
+  
     color: #fff;
     background-color: #ff4d4f;
     box-shadow: 0 2px 0 rgba(255,38,5,.06);
