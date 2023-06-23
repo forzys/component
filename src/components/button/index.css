@@ -34,7 +34,9 @@
 .btn-item[data-compact]{
     height: 1.625rem;
 }
-
+.btn-item[data-border]{ 
+    border-color: var(--border-color, currentColor);
+}
 
 .btn-item[data-disabled] {
     opacity: 0.4;
@@ -43,7 +45,9 @@
  
 .btn-item:not([data-type]):hover{
     color: #4096ff;
-    border-color: #4096ff;
+    /* border-color: #4096ff; */
+    /* box-shadow: 0 0.1em 0.1em rgba(0,0,0,0.3); */
+    background-color: rgba(0,0,0,0.1);
 }
 
 .btn-item[data-type^=text]:hover{

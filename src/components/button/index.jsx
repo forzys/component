@@ -20,6 +20,7 @@ export default memo((props)=>{
             onClick={onClick}
             data-outline={props.outline || undefined}
             data-type={props.type || undefined}
+            data-border={props.bordered}
         >
             {props.children}
         </button>
