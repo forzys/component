@@ -3,6 +3,7 @@
 
 .input-wrap{
     position: relative;
+    overflow: hidden;
 }
 
 .input-wrap[data-disabled]{
@@ -83,8 +84,8 @@
     /* top: 0;
     bottom: 0; */
     top: 50%;
-    right: 3px;
-    height: calc(100% - 4px);
+    right: 1px;
+    height: calc(100% - 2px);
     top: 50%;
     transform: translateY(-50%);
     min-width: 2.25rem;
@@ -94,6 +95,10 @@
     width: auto; 
     color: rgba(0,0,0,0.65);
     overflow: hidden;
+ 
+    border-top-right-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
+
 }
 
 
