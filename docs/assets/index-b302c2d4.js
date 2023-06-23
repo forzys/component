@@ -1,1 +1,0 @@
-import{r as s,j as r,a}from"./index-6e141e2b.js";import{a as d}from"./apis-4d01c9c8.js";const c=s.memo(e=>(d(),r("div",{className:"card",style:e.style,children:[a("div",{className:"card-header",style:e.headerStyle,children:e.title}),a("div",{className:"card-body",style:e.bodyStyle,children:e.children})]})));export{c as C};
