@@ -19,24 +19,24 @@ type SegmentType = {
 export default memo((props: any)=>{
     const [state, setState, { navigate }] = useUpdate({ loading: true })
  
-    const onSegmentChange = useMemoizedFn((item: SegmentType)=>{
-        const pre = '/' 
-        // const home = 'home'
-        const value = pre + item.value 
-        navigate(value)
-    })
-
-    console.log({ props })
+    const onSegmentChange = useMemoizedFn((_:any, item: SegmentType)=>{
+        // 页面跳转
+        navigate('/' + item.value)
+    });
+   
+    const init = useMemo(()=>location.pathname.replace('/', ''),[])
 
     return (
         <>
          <header className='header'> 
             <Segment 
                 fontSize="0.8rem"
+                init={init}
                 options={[
-                    {label: 'Home',     value: 'home'},
+                    {label: 'Video',     value: 'video'},
                     {label: 'Component',value: 'component'},
-                    {label: 'Wallpaper',  value: 'wallpaper'},
+                    {label: 'Calendar',  value: 'calendar'},
+                    {label: 'Theme',  value:'theme'},
                 ]}
                 onChange={onSegmentChange}
             />
