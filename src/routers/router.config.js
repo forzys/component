@@ -2,37 +2,31 @@
 const routers = [
     {
         path: "/", 
-        component: '@/layout/index.tsx',
-        // imm: import('@/layout/index'),
+        component: '@/layout/index.tsx', 
         children:[
             { 
-                index: true,
-            
-                component: '@/pages/home/index.tsx',
-                // component: import('@/pages/home/index'),
+                index: true, 
+                component: '@/pages/video/index.tsx', 
             }, 
             {
-                path: "/home",  
-                // index: true,
-                component: '@/pages/home/index.tsx',
-                // imm: import('@/pages/home/index'),
-         
+                path: "/video",   
+                component: '@/pages/video/index.tsx',  
             }, 
             {
                 path: "/component",
-                component: '@/pages/component/index.tsx',
-                // imm: import('@/pages/component/index'),
-        
+                component: '@/pages/component/index.tsx',  
             },
             {
-                path: "/wallpaper",
-                component: '@/pages/wallpaper/index.tsx',
-                // imm: import('@/pages/wallpaper/index'),
+                path: "/calendar",
+                component: '@/pages/calendar/index.tsx', 
             },
             {
                 path: "/summary",
-                component: '@/pages/summary/index.tsx',
-                // imm: import('@/pages/summary/index'),
+                component: '@/pages/summary/index.tsx', 
+            },
+            {
+                path: "/theme",
+                component: '@/pages/theme/index.tsx', 
             },
         ]
     },
