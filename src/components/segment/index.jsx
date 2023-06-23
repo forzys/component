@@ -3,7 +3,7 @@
 
 
 
-import { memo, useState, useLayoutEffect, useRef, useEffect } from "react"
+import { memo, useState, useLayoutEffect, useRef, useEffect, useCallback } from "react"
 import { useUid, useActive, useObserver, useCreation, useMemoizedFn } from '@/common/hooks' 
 import './index.css'
 
@@ -108,10 +108,10 @@ export default memo((props)=>{
     },[position])
 
 
-    const onChange = useMemoizedFn((item)=>{ 
-        setActive(item.value);
-        props?.onChange(item);
-    })
+    const onChange = useCallback((item)=>{
+        setActive(item.value); 
+        props?.onChange?.(item.value, item);
+    },[])
  
     return (
         <div className="segment" ref={observerRef} onClick={e=>e.stopPropagation()} style={props?.style}>
