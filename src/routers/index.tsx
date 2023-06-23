@@ -2,7 +2,7 @@
 
 
 
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 // * 导入所有router
 import { Navigate, useRoutes, createBrowserRouter, RouterProvider } from "react-router-dom";
 import type { RouteObject } from "react-router-dom";
@@ -63,6 +63,13 @@ const router = createBrowserRouter(
 export default () => {
     // console.log({ router }); 
     // console.log({ Routes });
+    //
+
+    useEffect(()=>{
+        let root = document.getElementById('root')
+        root?.classList.add('theme-root__init')
+    },[])
+ 
 
     return <RouterProvider router={router} />
     // return <RouterProvider router={router} />
