@@ -46,7 +46,8 @@ export default memo((props)=>{
 
         http?.get(holiday).then((res: any)=>{
             const now = new Date().valueOf(); 
-            const arrs = res?.days?.map((i: any)=> {
+            const data = res.data
+            const arrs = data?.days?.map((i: any)=> {
                 const tamp = new Date(i?.date).valueOf();
                 return {...i, diff: Math.abs(now - tamp)}
             }).sort((a:any, b:any)=>a.diff - b.diff)
