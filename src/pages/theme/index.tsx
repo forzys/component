@@ -71,20 +71,28 @@ export default memo((props)=>{
         // 切换类型 
         onFetchThemes(type, 0)
     });
+
+ 
  
     return (
         <div className="main">
-            <Card bodyStyle={{paddingBottom: 0, paddingTop: 0}} title="主题色搭配">
+            <Card 
+                bodyClassName="themes-box" 
+                headerStyle={{paddingBottom:6}} 
+                bodyStyle={{ paddingBottom: 0, paddingTop: 0}} 
+                title="主题色搭配"
+            >
                 <Segment 
                     fontSize="0.5rem"
                     onChange={onTypeChange}
                     options={[ 
                         {label: 'New', value: 'new'},
                         {label: 'Popular', value: 'popular'},
-                    ]} 
+                    ]}
+                    className="themes-segment"
                 />
 
-                <Spining loading={state?.loading }> 
+                <Spining loading={state?.loading} style={{flex: 1}}> 
                     <div className="themes">
                         {
                             state?.themes?.map((item:any)=>{
@@ -105,7 +113,7 @@ export default memo((props)=>{
                     </div>
                 </Spining>
                  
-                <div style={{display:'flex', marginLeft: 12}}>
+                <div className="themes-footer">
                     <Pagination total={13} page={Number(state.page) + 1} onChange={onPageChange} />
                 </div> 
             </Card> 
