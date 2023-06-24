@@ -1,15 +1,13 @@
 
 
-.pagination-group{
+.pagination-group, .page-item{
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
     align-items: center;
-    flex-wrap: wrap;
-    box-pack: center;
+    flex-wrap: nowrap;
     justify-content: center;
-    gap: calc(1rem / 2);
-    -webkit-tap-highlight-color: transparent;
+    gap: calc(1rem / 2); 
 }
 .pagination-group[data-disabled]{
     opacity: 0.4;
@@ -31,8 +29,30 @@
     min-width: 2rem;
     display: flex;
     box-align: center;
-    align-items: center;
-    box-pack: center;
+    align-items: center; 
     justify-content: center;
     pointer-events: none;
+}
+
+
+.page-item.small{
+    display: none;
+}
+
+@media screen and (max-width: 479px){
+    .page-item{
+        display: none;
+    }
+    .page-item.small{
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center; 
+        justify-content: center;
+        gap: calc(1rem / 2); 
+    }
+
+    .page-item.small > * {
+        box-sizing: border-box;
+        flex-grow: 0;
+    }
 }
