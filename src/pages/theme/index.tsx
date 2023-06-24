@@ -74,7 +74,7 @@ export default memo((props)=>{
  
     return (
         <div className="main">
-            <Card bodyStyle={{paddingBottom: 0}} title="主题色搭配">
+            <Card bodyStyle={{paddingBottom: 0, paddingTop: 0}} title="主题色搭配">
                 <Segment 
                     fontSize="0.5rem"
                     onChange={onTypeChange}
