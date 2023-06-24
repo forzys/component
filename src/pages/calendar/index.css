@@ -6,6 +6,7 @@
     position: relative; 
     backdrop-filter: blur(5px); 
     color: #fff;
+    z-index: 0;
     /* background-image: linear-gradient(to top right,rgba(90,149,207,.5),rgba(58,76,99,.8)); */
 }
 .holiday-header::before{ 
@@ -26,12 +27,15 @@
 }
 
 .holiday-body{
-    margin:0;
+    margin:0; 
 }
 @media screen and (max-width: 479px){
     .holiday-body{
-        margin: -36px;
+        min-width: 308px;
+        max-width: 340px;
+        margin: -36px auto;
         margin-top: 0;
-    }
+        max-height: 420px;
+    } 
 }
 
