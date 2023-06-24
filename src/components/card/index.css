@@ -19,6 +19,8 @@
     padding: 1.25rem;
     border: 0.0625rem solid rgb(222, 226, 230);
     margin: 12px;
+
+    max-height: calc(95vh - 80px); 
 }
  
 .card:not(.card-bordered) {
@@ -35,6 +37,9 @@
 .card .card-body{
     padding: 24px;
     border-radius: 0 0 8px 8px;
+
+    max-height: 80vh;
+    overflow: auto;
 }
 
 .card .card-footer{
