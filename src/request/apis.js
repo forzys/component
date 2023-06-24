@@ -1,10 +1,14 @@
 
 
+// "https://cdn.jsdelivr.net/gh/imm-o/holiday-cn@latest/$var.json",
+
 export default { 
     analysis: 'https://46yun.free1.asia/',
     weibo: 'https://weibo.com/ajax/statuses/hot_band',
-    holiday: 'https://raw.githubusercontent.com/imm-o/holiday-cn/master/$var.json',
-    themes: 'https://raw.githubusercontent.com/imm-o/themes/main/themes/$type/$var.json'
+    holiday: "https://cdn.jsdelivr.net/gh/imm-o/holiday-cn@master/$var.json",
+    // holiday: 'https://raw.githubusercontent.com/imm-o/holiday-cn/master/$var.json',
+    themes: 'https://cdn.jsdelivr.net/gh/imm-o/themes/themes/$type/$var.json',
+    // themes: 'https://raw.githubusercontent.com/imm-o/themes/main/themes/$type/$var.json'
 }
 
 
