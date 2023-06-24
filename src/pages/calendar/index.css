@@ -14,13 +14,24 @@
     top: 0;
     left: 0;
     right:0;
-    height: 200%; 
+    height: 300%; 
     background-image: linear-gradient(to top left,rgba(231, 97, 97,1),rgba(176, 71, 89,1));
     z-index: -1;
     filter: blur(8px);
-    margin: -24px;  
+    margin: -48px;  
 } 
 .holiday-row{
     display: flex;
     align-items: center;
 }
+
+.holiday-body{
+    margin:0;
+}
+@media screen and (max-width: 479px){
+    .holiday-body{
+        margin: -36px;
+        margin-top: 0;
+    }
+}
+

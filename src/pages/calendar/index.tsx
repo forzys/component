@@ -42,12 +42,12 @@ export default memo((props)=>{
     return (
         <div className="main"> 
            <Card style={{paddingBottom:0}}> 
-                <div className="holiday-header" style={{ paddingBottom: 12}}> 
+                <div className="holiday-header" style={{ paddingBottom: 12 }}> 
                     <span style={{fontSize: 16}}>放假安排</span>
                     <div style={{ fontSize: 12}}>国务院公布的全年法定节假日安排</div> 
                 </div>
                 
-                <Card style={{margin: 0, paddingTop: 0}} bodyStyle={{padding: 12, paddingBottom: 0}}> 
+                <Card className="holiday-body" style={{ paddingTop: 0}} bodyStyle={{padding: 12, paddingBottom: 0}}> 
                     <div>
                         {
                             state?.holiday?.map((name: string)=>{
@@ -60,7 +60,7 @@ export default memo((props)=>{
                                     <p className="holiday-row" key={first+last}>
                                         <span style={{flex: 1, fontWeight:600}}>{name}</span>
                                         <span style={{flex: 2 }}>{first} - {last}</span>
-                                        <span style={{width: 24}}>{length}</span>
+                                        <span style={{width: 48, textAlign:'center'}}>{length}</span>
                                     </p>
                                 )
                             })
