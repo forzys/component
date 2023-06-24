@@ -1,12 +1,19 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import fs from 'fs';
 import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
 	 
   	plugins: [
-		react()
+		react(),
+		{
+			name: 'copy-404',
+			async writeBundle() {
+			  await fs.copyFileSync('./docs/index.html', './docs/404.html');
+			}
+		}
 	],
   
 	resolve: {
