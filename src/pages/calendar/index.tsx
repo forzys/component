@@ -44,7 +44,7 @@ export default memo((props)=>{
            <Card style={{paddingBottom:0}} bodyStyle={{padding: 0}}> 
                 <div className="holiday-header" style={{ paddingBottom: 12}}> 
                     <span style={{fontSize: 16}}>放假安排</span>
-                    <div style={{fontSize: 12}}>国务院公布的全年法定节假日安排</div> 
+                    <div style={{ fontSize: 12}}>国务院公布的全年法定节假日安排</div> 
                 </div>
                 
                 <Card style={{margin: 0, paddingTop: 0}} bodyStyle={{padding: 12, paddingBottom: 0}}> 
@@ -58,9 +58,9 @@ export default memo((props)=>{
     
                                 return (
                                     <p className="holiday-row" key={first+last}>
-                                        <span style={{flex: 1}}>{name}</span>
-                                        <span style={{flex: 2}}>{first} - {last}</span>
-                                        <span style={{flex: 1}}>{length}</span>
+                                        <span style={{flex: 1, fontWeight:600}}>{name}</span>
+                                        <span style={{flex: 2 }}>{first} - {last}</span>
+                                        <span style={{width: 24}}>{length}</span>
                                     </p>
                                 )
                             })
