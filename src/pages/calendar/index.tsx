@@ -18,32 +18,24 @@ import './index.css'
 
 export default memo((props)=>{
     const [https] = useFetch()
-    const [state, setState, { navigate }] = useUpdate({ loading: true })
+    const [state, setState ] = useUpdate({ loading: true })
 
   
     useLayoutEffect(()=>{
-        // state.tp = new TinyPlayer({
-        //     // container: document.querySelector('#tiny-player'), // 挂载节点
-        //     poster: 'https://tiny-player.vercel.app/movie.png', // 封面地址 
-        //     preload: 'metadata', // 预加载 
-        //     type: 'auto', // 视频类型
-        //     waterMarkShow: true, // 是否显示水印 
-        //     width: '80%', // 自定义宽度 
-        // });
-
+      
         const holiday = String(apis.holiday).replace('$var', '2023');
 
         https?.get(holiday).then((res: any)=>{
-            const days = res?.days?.reduce((summ:any, item:any)=>{ 
+            const data = res?.data
+            const days = data?.days?.reduce((summ:any, item:any)=>{ 
                 summ[item.name] = summ[item.name] || [];
-                
                 if(item.isOffDay){
                     summ[item.name].push(item.date)
                 }
                 return summ 
             },{});
 
-            setState({ days, holiday: Object.keys(days) }) 
+            setState({ days, holiday: Object.keys(days || {}) }) 
         }); 
 
     },[])
