@@ -88,7 +88,7 @@ export default memo((_props)=>{
                         <Loading className='spinner-icon' type="1" />:
                         <Button type="text" style={{ borderRadius: 0 }} onClick={onChange}>Search</Button>
                     } 
-                    wrapStyle={{ width: '80%', }}
+                    className="input"
                     style={{ paddingRight: '4rem'}}
                     onChange={onInput}
                     afterClass="btn-search"

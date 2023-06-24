@@ -22,3 +22,18 @@
     color: var(--error-color);
 }
 
+.input{
+    width: 80%;
+}
+
+/* @media (max-width: 30rem){
+    body, body.mobile.two-columns {
+        font-size: 60%;
+    }
+} */
+@media screen and (max-width: 900px){
+    .input{
+        width: 100%;
+    }
+}
+ 
