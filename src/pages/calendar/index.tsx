@@ -41,7 +41,7 @@ export default memo((props)=>{
     },[])
     return (
         <div className="main"> 
-           <Card style={{paddingBottom:0}} bodyStyle={{padding: 0}}> 
+           <Card style={{paddingBottom:0}}> 
                 <div className="holiday-header" style={{ paddingBottom: 12}}> 
                     <span style={{fontSize: 16}}>放假安排</span>
                     <div style={{ fontSize: 12}}>国务院公布的全年法定节假日安排</div> 
