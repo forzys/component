@@ -114,37 +114,42 @@ export default memo((props)=>{
     },[])
  
     return (
-        <div className="segment" ref={observerRef} onClick={e=>e.stopPropagation()} style={props?.style}>
-            <span className="segment-active" style={activeStyle} />
-            {
-                props.options?.map((i, j)=>{
-                    const item = typeof i === 'string' ? { label: i, value: i } : i
-                    return (
-                        <div className="segment-item" key={item.value}>
-                            <input
-                                name={uid}
-                                disabled={props.disabled || item.disabled || undefined}
-                                type="radio"
-                                value={item.value}
-                                id={`${uid}-${item.value}`}
-                                className="segment-item-input"
-                                checked={active === item.value}
-                                onChange={onChange.bind(null, item)}
-                            />
-                            <label
-                                className='segment-item-label'
-                                style={{ '--segment-font': props.fontSize }}
-                                data-active={(active === item.value && !(props.disabled || item.disabled)) || undefined}
-                                data-disabled={props.disabled || item.disabled || undefined}
-                                htmlFor={`${uid}-${item.value}`}
-                                ref={(node) => refs.current[item.value] = node}
-                            >
-                                {item.label}
-                            </label>
-                        </div>
-                    )
-                })
-            }
+        <div className={props.className}>
+
+            <div className="segment" ref={observerRef} onClick={e=>e.stopPropagation()} style={props?.style}>
+                <span className="segment-active" style={activeStyle} />
+                {
+                    props.options?.map((i, j)=>{
+                        const item = typeof i === 'string' ? { label: i, value: i } : i
+                        return (
+                            <div className="segment-item" key={item.value}>
+                                <input
+                                    name={uid}
+                                    disabled={props.disabled || item.disabled || undefined}
+                                    type="radio"
+                                    value={item.value}
+                                    id={`${uid}-${item.value}`}
+                                    className="segment-item-input"
+                                    checked={active === item.value}
+                                    onChange={onChange.bind(null, item)}
+                                />
+                                <label
+                                    className='segment-item-label'
+                                    style={{ '--segment-font': props.fontSize }}
+                                    data-active={(active === item.value && !(props.disabled || item.disabled)) || undefined}
+                                    data-disabled={props.disabled || item.disabled || undefined}
+                                    htmlFor={`${uid}-${item.value}`}
+                                    ref={(node) => refs.current[item.value] = node}
+                                >
+                                    {item.label}
+                                </label>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+
         </div>
+     
     )
 })
