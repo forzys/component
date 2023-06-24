@@ -29,13 +29,8 @@ export default memo((_props)=>{
  
     const onGetAnalysis = useCallback(async (url:string):Promise<any>=>{
         setState({ loading: true, analysis: {} });
-        const data = await https.get(apis.analysis, { data: { url: url }})
-    
-        // if(state.tp && data.data){
-        //     state.tp.options.poster = data.data.cover
-        //     state.tp.options.src = data.data.url 
-        //     state.tp.setup() 
-        // } 
+        const res = await https.get(apis.analysis, { data: { url: url }}) 
+        const data = res.data
         setState({ analysis: data.data ? data.data : data, loading: false })
     },[])
 
@@ -64,14 +59,11 @@ export default memo((_props)=>{
         }
 
         switch(info.type){
-            case '1':
-                download(state?.analysis?.url);
+            case '1': download(state?.analysis?.url);
                 break;
-            case '2':
-                download(state?.analysis?.cover);
+            case '2': download(state?.analysis?.cover);
                 break;
-            case '3':
-                download(state?.analysis?.music?.url);
+            case '3': download(state?.analysis?.music?.url);
                 break; 
         } 
     }); 
