@@ -42,8 +42,8 @@ export default memo((props)=>{
             const name = type + '_' + page
             const path = apis.themes.replace('$type', type)?.replace('$var', name)
      
-            https.get(path).then((themes)=>{
-                setState({ themes: themes, loading: false })
+            https.get(path, { signal: 'theme' }).then((themes)=>{
+                setState({ themes: themes.data, loading: false })
                 resolve(true)
             })
         })
