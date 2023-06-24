@@ -1,68 +1,45 @@
 import { memo, useCallback, useLayoutEffect } from "react"; 
 import Input from '@/components/input'
 import Button from '@/components/button'
-import { Search } from '@/components/icons'  
-
+import { Search , Loading} from '@/components/icons'
 import TinyPlayer from '@/assets/TinyPlayer'
 import Markdown from '@/assets/Markdown'
-import { useMemoizedFn, useFullScreen, useCreation, usePagination, useUpdate } from '@/common/hooks' 
+import { useMemoizedFn, useUpdate } from '@/common/hooks' 
+
 import { useFetch, apis } from '@/request/index'
 import Group from "@/components/group";
 import Tooltip from '@/components/tooltip'
 import Card from "@/components/card";
 import './index.css'
 
- 
+// state.tp = new TinyPlayer({
+//     // container: document.querySelector('#tiny-player'), // 挂载节点
+//     poster: 'https://tiny-player.vercel.app/movie.png', // 封面地址 
+//     preload: 'metadata', // 预加载 
+//     type: 'auto', // 视频类型
+//     waterMarkShow: true, // 是否显示水印 
+//     width: '80%', // 自定义宽度 
+// }); 
+// console.log({ Markdown, TinyPlayer })
 
 export default memo((_props)=>{ 
-    // console.log({ a: 'HOME', props, player });
-    console.log({ Markdown, TinyPlayer })
- 
+    
     const [https] = useFetch()
-    const [state, setState, { navigate }] = useUpdate({ loading: true })
-
-  
-    useLayoutEffect(()=>{
-        // state.tp = new TinyPlayer({
-        //     // container: document.querySelector('#tiny-player'), // 挂载节点
-        //     poster: 'https://tiny-player.vercel.app/movie.png', // 封面地址 
-        //     preload: 'metadata', // 预加载 
-        //     type: 'auto', // 视频类型
-        //     waterMarkShow: true, // 是否显示水印 
-        //     width: '80%', // 自定义宽度 
-        // });
-
-        const holiday = String(apis.holiday).replace('$var', '2023');
-
-        https?.get(holiday).then((res: any)=>{
-            const days = res?.days?.reduce((summ:any, item:any)=>{ 
-                summ[item.name] = summ[item.name] || [];
-                
-                if(item.isOffDay){
-                    summ[item.name].push(item.date)
-                }
-                return summ 
-            },{});
-
-            setState({ days, holiday: Object.keys(days) }) 
-        });
-
-
-    },[])
-
-
+    const [state, setState] = useUpdate({ loading: false })
+ 
     const onGetAnalysis = useCallback(async (url:string):Promise<any>=>{
+        setState({ loading: true, analysis: {} });
         const data = await https.get(apis.analysis, { data: { url: url }})
-   
-        if(state.tp && data.data){
-            state.tp.options.poster = data.data.cover
-            state.tp.options.src = data.data.url 
-            state.tp.setup() 
-        } 
-        setState({ analysis: data.data ? data.data : {} })
+    
+        // if(state.tp && data.data){
+        //     state.tp.options.poster = data.data.cover
+        //     state.tp.options.src = data.data.url 
+        //     state.tp.setup() 
+        // } 
+        setState({ analysis: data.data ? data.data : data, loading: false })
     },[])
 
-    const onChange = useMemoizedFn(():any=>{
+    const onChange = useMemoizedFn(():any=>{ 
         const value = state.input || ''
         const regex = /http[s]?:\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&:\-\+\%]*[/]*/
         const [url] = value?.match(regex) || [];
@@ -74,8 +51,7 @@ export default memo((_props)=>{
         state.input = value
     });
 
-    const onDownload = useMemoizedFn((event: React.ChangeEvent, info:any):any=>{
-
+    const onDownload = useMemoizedFn((event: React.ChangeEvent, info:any):any=>{ 
         const download = (url: string)=>{ 
             let analysis_a = document.createElement('a')
             document.body.append(analysis_a)
@@ -98,7 +74,7 @@ export default memo((_props)=>{
                 download(state?.analysis?.music?.url);
                 break; 
         } 
-    })
+    }); 
       
     return (
         <div className="main"> 
@@ -115,7 +91,11 @@ export default memo((_props)=>{
                 <Input
                     placeholder="请粘贴分享链接" 
                     before={<Search fontSize="18px" search />} 
-                    after={<Button type="text" style={{ borderRadius: 0 }} onClick={onChange}>Search</Button>} 
+                    after={
+                        state?.loading ? 
+                        <Loading className='spinner-icon' type="1" />:
+                        <Button type="text" style={{ borderRadius: 0 }} onClick={onChange}>Search</Button>
+                    } 
                     wrapStyle={{ width: '80%', }}
                     style={{ paddingRight: '4rem'}}
                     onChange={onInput}
@@ -126,15 +106,22 @@ export default memo((_props)=>{
 
                 <div id="tiny-player" style={{maxHeight: 390}} />
 
+                <div className="tips error" style={{display: state?.analysis?.msg ? 'block': 'none'}}>
+                    {state?.analysis?.msg}
+                </div>
+                <div className="tips success" style={{display: state?.analysis?.url ? 'block': 'none'}}>
+                    获取成功 点击下载
+                </div>
+
                 <Group style={{marginTop: 12}}>
-                    <Tooltip disabled={!!state?.analysis?.url} label={<div> 没有内容 </div>}>
+                    <Tooltip disabled={!state?.analysis?.url} label={<font12> 获取成功 <br /> 点击下载 </font12>}>
                         <Button disabled={!state?.analysis?.url} type='1' onClick={onDownload}>下载视频</Button>
                     </Tooltip> 
-                    <Tooltip disabled={!!state?.analysis?.cover} label={<div> 没有内容 </div>}>
+                    <Tooltip disabled={!state?.analysis?.cover} label={<font12> 获取成功 <br /> 点击下载 </font12>}>
                         <Button disabled={!state?.analysis?.cover} type='2' onClick={onDownload}>下载封面</Button>
                     </Tooltip> 
-                    <Tooltip disabled={!!state?.analysis?.music?.url} label={<div> 没有内容 </div>}>
-                        <Button disabled={!state?.analysis?.music.url} type='3' onClick={onDownload}>下载音频</Button>
+                    <Tooltip disabled={!state?.analysis?.music?.url} label={<font12> 获取成功 <br /> 点击下载 </font12>}>
+                        <Button disabled={!state?.analysis?.music?.url} type='3' onClick={onDownload}>下载音频</Button>
                     </Tooltip>
                 </Group> 
             </Card> 
