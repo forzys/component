@@ -94,9 +94,8 @@ export default memo((props)=>{
     console.log('First:::', state )
   
     return (
-        <div className='main'>
-
-            <Card title="自定义组件" bodyStyle={{ overflowY:'auto' }}> 
+        <div className='main'> 
+            <Card title="自定义组件" bodyStyle={{ overflow:'hidden', overflowY:'auto' }}>
                 <Spining loading={state?.loading }>   
                     <div style={{ display:'flex', flexDirection:'column', paddingBottom: 24 }}> 
                         <div>
