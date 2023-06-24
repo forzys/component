@@ -5,7 +5,7 @@ import './index.css'
 export default memo((props)=>{ 
 
     return (
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', ...props.style }}>
             {
                 !!props?.loading && ( 
                     <div className="spinner">
