@@ -232,4 +232,10 @@ audio, canvas, embed, iframe, img, object, svg, video {
  
   --btn-danger-color: #ff4d4f;
   --btn-hover-danger-color: #ff7875;
+
+  --error-color:#ff4d4f;
+}
+
+font12{
+  font-size: 12px;
 }
