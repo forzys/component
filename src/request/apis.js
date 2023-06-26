@@ -7,7 +7,7 @@ export default {
     weibo: 'https://weibo.com/ajax/statuses/hot_band',
     holiday: "https://cdn.jsdelivr.net/gh/imm-o/holiday-cn@master/$var.json",
     // holiday: 'https://raw.githubusercontent.com/imm-o/holiday-cn/master/$var.json',
-    themes: 'https://cdn.jsdelivr.net/gh/imm-o/themes/themes/$type/$var.json',
+    themes: 'https://cdn.jsdelivr.net/gh/imm-o/dataset/themes/$type/$var.json',
     // themes: 'https://raw.githubusercontent.com/imm-o/themes/main/themes/$type/$var.json'
 }
 
