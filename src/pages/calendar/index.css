@@ -35,7 +35,9 @@
         max-width: 340px;
         margin: -36px auto;
         margin-top: 0;
-        max-height: 420px;
+        max-height: 420px; 
+        overflow: hidden;
+        overflow-y: auto;
     } 
 }
 

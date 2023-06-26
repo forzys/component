@@ -47,7 +47,7 @@ export default memo((props)=>{
                     <div style={{ fontSize: 12}}>国务院公布的全年法定节假日安排</div> 
                 </div>
                 
-                <Card className="holiday-body" style={{ paddingTop: 0}} bodyStyle={{padding: 12, paddingBottom: 0}}> 
+                <Card className="holiday-body" style={{ paddingTop: 0 }} bodyStyle={{padding: 12}}> 
                     <div>
                         {
                             state?.holiday?.map((name: string)=>{
