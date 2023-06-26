@@ -17,8 +17,15 @@
     margin-left: 12px;
     display: flex;
 }
-  
+
 @media screen and (max-width: 479px){
+    .card-header{
+        display: none;
+    }
+    .themes-box .themes-segment{
+        display: flex;
+        justify-content: center;
+    }
     .themes-box .themes-footer{
         margin: 0;
         display: flex;
