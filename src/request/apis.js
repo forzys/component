@@ -5,14 +5,19 @@
 export default { 
     analysis: 'https://46yun.free1.asia/',
     weibo: 'https://weibo.com/ajax/statuses/hot_band',
-    holiday: "https://cdn.jsdelivr.net/gh/imm-o/holiday-cn@master/$var.json",
+    
+    holiday: "https://cdn.jsdelivr.net/gh/for2me/holiday-cn@master/$var.json",
     // holiday: 'https://raw.githubusercontent.com/imm-o/holiday-cn/master/$var.json',
-    themes: 'https://cdn.jsdelivr.net/gh/imm-o/dataset/themes/$type/$var.json',
-    // themes: 'https://raw.githubusercontent.com/imm-o/themes/main/themes/$type/$var.json'
+    
+    // themes: 'https://github.moeyy.xyz/https://raw.githubusercontent.com/for2me/dataset/themes/$type/$var.json',
+    themes: 'https://raw.githubusercontent.com/for2me/dataset/main/themes/$type/$var.json',
+      
+    // archive: 'https://github.moeyy.xyz/https://raw.githubusercontent.com/imm-o/blog/main/archive/$blog',
+    archive: 'https://cdn.jsdelivr.net/gh/for2me/blog@main/archive/$blog',
+
+    // blogs: 'https://github.moeyy.xyz/https://raw.githubusercontent.com/imm-o/blog/main/archive/$blog.json', 
+    blogs: 'https://cdn.jsdelivr.net/gh/for2me/blog@main/archive/$blog.json',
 }
-
-
-
 // async function translation(array) {
 //     var splicing = []
 //     if (!(array instanceof Array)) {
