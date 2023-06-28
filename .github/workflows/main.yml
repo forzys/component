@@ -8,16 +8,13 @@ on:
 
 env:
   GITHUB_NAME: for2me 
-  GITHUB_EMAIL: zys@outlook.in 
-
+  GITHUB_EMAIL: zys@outlook.in
 
 jobs:
-  build:
+  push: 
     runs-on: ubuntu-latest
-     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
+    steps:
+      - uses: actions/checkout@v3
       - name: Install Dependencies
         run: yarn 
       
