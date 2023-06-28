@@ -10,7 +10,8 @@ body{
   height: 100vh;
   background-position: center center;
   background-repeat: repeat; 
-  overflow: hidden;
+  overflow: hidden; 
+  background-image: url('./assets/bg.png');
 }
 
 
