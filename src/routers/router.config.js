@@ -17,10 +17,13 @@ const routers = [
             //     component: '@/pages/blog/index.tsx',  
             // }, 
             {
-                index: true, 
-                path: "/video",   
+                index: true,
                 component: '@/pages/video/index.tsx',  
             }, 
+            { 
+                path: "/video",   
+                component: '@/pages/video/index.tsx',  
+            },
             {
                 path: "/component",
                 component: '@/pages/component/index.tsx',  
