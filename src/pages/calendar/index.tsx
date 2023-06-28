@@ -4,9 +4,7 @@ import Input from '@/components/input'
 import Button from '@/components/button'
 import { Search } from '@/components/icons' 
 import Stretch from '@/components/stretch' 
-
-import TinyPlayer from '@/assets/TinyPlayer'
-import Markdown from '@/assets/Markdown'
+ 
 import { useMemoizedFn, useFullScreen, useCreation, usePagination, useUpdate } from '@/common/hooks' 
 import { useFetch, apis } from '@/request/index'
 import Group from "@/components/group";

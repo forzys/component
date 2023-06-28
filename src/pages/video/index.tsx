@@ -2,8 +2,6 @@ import { memo, useCallback, useLayoutEffect } from "react";
 import Input from '@/components/input'
 import Button from '@/components/button'
 import { Search , Loading} from '@/components/icons'
-import TinyPlayer from '@/assets/TinyPlayer'
-import Markdown from '@/assets/Markdown'
 import { useMemoizedFn, useUpdate } from '@/common/hooks' 
 
 import { useFetch, apis } from '@/request/index'
