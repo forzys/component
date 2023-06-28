@@ -1,0 +1,33 @@
+
+name: Build Website
+
+on:
+  push:
+    branches:
+      - main 
+
+env:
+  GITHUB_NAME: for2me 
+  GITHUB_EMAIL: zys@outlook.in 
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: yarn 
+      
+      - name: Build Website
+        run: yarn build
+
+      - name: Push Docs
+        run: |
+          git config --local user.email "${{ env.GITHUB_EMAIL }}"
+          git config --local user.name "${{ env.GITHUB_NAME }}"
+          git add docs/* 
+          git commit -a -m 'build docs' || echo "nothing to commit"
+          git push || echo "nothing to push"
