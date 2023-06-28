@@ -21,6 +21,27 @@ export function numberFormat(num = '', decimals = 2, info) {
 	return pre + text + suf
 }
 
+export const dateFormat = function(input) { 
+    const date = new Date( input || Date.now())
+    const formatType = {
+        Y: date.getFullYear(),
+        M: date.getMonth() + 1,
+        D: date.getDate(),
+        h: date.getHours(),
+        m: date.getMinutes(),
+        s: date.getSeconds(),
+    }
+    
+      return {
+          format:(formatStr)=>{
+            return formatStr ? formatStr.replace(
+                /Y+|M+|D+|h+|m+|s+/g,
+                target => (new Array(target.length).join('0') + formatType[target[0]]).substr(-target.length)
+            ): date.getTime()
+          }
+      }
+}
+ 
 
 /**
  * 获取文件base64编码
