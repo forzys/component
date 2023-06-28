@@ -3,7 +3,7 @@
 
 import { createElement, useState, useEffect  } from 'react'
 import { useTimeAuto } from  '@/hooks/useTimeAuto'
-import { useFullScreen } from '@/hooks/useFullScreen'
+import { useFullScreen } from '@/hooks/useFullscreen'
 import { useHover, useClick } from  '@/hooks/useEvents'
 import { useMemoize, useMemoizedFn } from  '@/hooks/useMemoize'
 import { useCreation, useUpdate, useActive } from  '@/hooks/useUpdate'
