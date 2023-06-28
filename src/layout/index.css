@@ -7,3 +7,9 @@
     justify-content: center;
     max-height: 5vh;
 }
+
+
+.footer{
+    position: sticky;
+    bottom: 0;
+}
