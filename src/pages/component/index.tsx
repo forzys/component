@@ -15,7 +15,7 @@ import Tooltip from '@/components/tooltip'
 import Pagination from '@/components/pagination'
 import Input from '@/components/input'
 import Select from '@/components/select'
-// import Modal from '@/components/modal'
+import Modal from '@/components/modal'
 import Card from "@/components/card";
 import { Direction, Media, Configure, Official, Symbol, Loading, Weather,Search, Screen} from '@/components/icons' 
 import { useMemoizedFn, useFullScreen, useCreation, usePagination, useUpdate } from '@/common/hooks' 
@@ -98,29 +98,41 @@ export default memo((props)=>{
             <Card title="自定义组件" bodyStyle={{ overflow:'hidden', overflowY:'auto' }}>
                 <Spining loading={state?.loading }>   
                     <div style={{ display:'flex', flexDirection:'column', paddingBottom: 24 }}> 
-                        <div>
+                        
+                        <div> 
+                            <h4>Timing 组件</h4>
                             <div>
                                 <span className='badge-status' style={{ '--status-color': 'rgba(73, 227, 221, 1)'} as CustomCSS} />
                                 <span> 当前日期 ： </span>
                                 <Timing date />
                             </div> 
+
+                            <div>
+                                <span className='badge-status' style={{ '--status-color': '#1677ff'} as CustomCSS} />
+                                <span> 当前时间 ： </span> 
+                                <Timing time /> 
+                            </div> 
                         </div>
+                        
+
                         <div>
-                            <span className='badge-status' style={{ '--status-color': '#1677ff'} as CustomCSS} />
-                            <span> 当前时间 ： </span> 
-                            <Timing time /> 
-                        </div> 
-                        <div>
-                            <span className='badge-status' style={{ '--status-color': '#1677ff'} as CustomCSS} />
-                            <span> 最近假期 ： </span> 
-                            <span style={{display:'inline-flex', gap: 6}}> {[state.days] } </span> 
+                            <h4> useCreation Hook</h4>
+                            <div>正常的函数： {getNowData()}</div>
+                            <div>useCreation包裹后的： {nowData}</div>
+                            <Button style={{fontSize:12}} type="primary" onClick={()=>setState({})}>更新State</Button> 
                         </div>
                 
-                        <div>正常的函数： {getNowData()}</div>
-                        <div>useCreation包裹后的： {nowData}</div>
+                     
 
-                        <Groups style={{ marginBottom: 24 }}>
+
+
+                        <div>
+                            <h4> Switch </h4>
                             <Switch />
+                        </div>
+
+                        <div>
+                            <h4>Segment</h4>
                             <Segment 
                                 fontSize="0.5rem"
                                 options={[ 
@@ -131,187 +143,206 @@ export default memo((props)=>{
                                     {label: 'align', value: 'align'},
                                 ]} 
                             /> 
-                            <Tooltip label={<div> Hello <br /> Hover </div>}>
-                                <Button>Hello Hover</Button>
-                            </Tooltip> 
-                        </Groups>
+                        </div>
 
-                        <Groups style={{ marginBottom: 24 }}>
-                            <Pagination total={12} />
-                        </Groups>
 
-                        <Groups style={{ marginBottom: 24 }}>
-                            <Button onClick={onGotoSummary}> Go to Summary</Button>
-                            <Button type="text"> AAAA</Button>
-                            <Button type="primary"> BBBB</Button>
-                            <Button type="danger"> CCCC</Button> 
+                        <div>
+                            <h4>Tooltip</h4>
+                            <Groups> 
+                                <Tooltip label={<div> Hello <br /> Hover </div>}>
+                                    <Button>Hover Me</Button>
+                                </Tooltip> 
+                            </Groups> 
+                        </div>
 
-                            <Button type="primary" outline> BBBB</Button>
-                            <Button type="danger" outline> CCCC</Button>
-                        </Groups> 
+                        <div>
+                            <h4>Modal</h4>
 
-                        <Groups style={{ marginBottom: 24 }}>
-                            <Input
-                                placeholder="2323" 
-                                before={[
-                                    <Segment 
-                                        fontSize="0.1rem"
-                                        options={[ 'apple', 'funct' ]}
-                                    />,
-                                    <Search fontSize="18px" search />
-                                ].find((n,i)=> Number(state?.inputType === 'segment') === i)}
+                            <Modal open={state.modalOpen} onClose={()=>setState({ modalOpen: false })} />
 
-                                after={
-                                    <Button type="text" compact onClick={()=> setState({ inputType: state?.inputType === 'segment' ? 'search': 'segment'})}>
-                                        { ['Search', 'Segment'].find((n,i)=> Number(state?.inputType === 'segment') === i) }
-                                    </Button>
-                                }
-                                value={state?.input || ''}
-                                onChange={(e: any)=>setState({ input: e?.target?.value })}
-                            />   
-                        </Groups>
+                            <Groups> 
+                                <Button onClick={()=>setState({ modalOpen: true })}>Click Me</Button>
+                            </Groups> 
+                        </div>
 
-                        <Groups style={{ marginBottom: 24 }}>
-                            <Select 
-                                clearable
-                                option={[
-                                    {label: 'list1', value: 'list1'},
-                                    {label: 'list2', value: 'list2', disabled: 1},
-                                    {label: 'list3', value: 'list3'},
-                                    {label: 'list4', value: 'list4', disabled: 1},
-                                    {label: 'list5', value: 'list5'},
-                                    {label: 'list6', value: 'list6'},
-                                    {label: 'list7', value: 'list7'},
-                                ]}
-                            />
-                        </Groups> 
+                        <div>
+                            <h4>Pagination</h4>
+                            <Groups> 
+                                <Pagination total={12} />
+                            </Groups> 
+                        </div>
 
-                        <Groups style={{ marginBottom: 24 }}>
-                            <Figure 
-                                title="774×1186 131 KB" 
-                                img="https://t8.baidu.com/it/u=3297273922,3348521994&fm=218&app=126&size=f242,150&n=0&f=JPEG&fmt=auto?s=BA81A14C8BA0BD4308F5D10B0000E0C1&sec=1681491600&t=0a363ddbfcfc830e10038a0ed04be108" 
-                            />
-                        </Groups>  
+                        <div>
+                            <h4>Button</h4>
+                            <Groups style={{ marginBottom: 24 }}>
+                                {/* <Button onClick={onGotoSummary}> Go to Summary</Button> */}
+                                <Button type="text"> AAAA</Button>
+                                <Button type="primary"> BBBB</Button>
+                                <Button type="danger"> CCCC</Button> 
 
-                        <Groups> 
-                            <Loading className='spinner-icon' type="1" /> 
-                            <Loading type="3" className='spinner-zoom' />
-                            <Loading type="2" className='spinner-icon2 ' fontSize="22px"  /> 
-                            
-                        </Groups>
+                                <Button type="primary" outline> BBBB</Button>
+                                <Button type="danger" outline> CCCC</Button>
+                            </Groups> 
+                        </div>
 
-                        <Groups> 
-                            <Search search />
-                            <Search find />
-                            <Search history />
-                            <Search zoomIn />
-                            <Search zoomOut />
-                        </Groups>
+                        <div>
+                            <h4>Input</h4>
+                            <Groups style={{ marginBottom: 24 }}>
+                                <Input
+                                    placeholder="2323" 
+                                    before={<Segment fontSize="0.1rem" options={[ 'apple', 'funct' ]} />}
 
-                        <Groups> 
-                            <Symbol close /> 
-                            <Symbol close-o />
-                            <Symbol check  />
-                            <Symbol minus  />
-                            <Symbol plus  />  
-                            <Symbol exclamation  />  
-                        
-                            <Symbol more  />  
-                        </Groups>
+                                    after={
+                                        <Button type="text" compact>
+                                            Search
+                                        </Button>
+                                    }
+                                    value={state?.input || ''}
+                                    onChange={(e: any)=>setState({ input: e?.target?.value })}
+                                />   
+                            </Groups>
+                        </div>
 
-                        <Groups> 
-                            <Configure system  />  
-                            <Configure setting  />  
-                            <Configure like  /> 
-                            <Configure tips  /> 
-                            <Configure copy  /> 
-                            <Configure delete  /> 
-                            <Configure power  /> 
-                            <Configure application  /> 
+                        <div>
+                            <h4>Select</h4>
+                            <Groups style={{ marginBottom: 24 }}>
+                                <Select 
+                                    clearable
+                                    option={[
+                                        {label: 'list1', value: 'list1'},
+                                        {label: 'list2', value: 'list2', disabled: 1},
+                                        {label: 'list3', value: 'list3'},
+                                        {label: 'list4', value: 'list4', disabled: 1},
+                                        {label: 'list5', value: 'list5'},
+                                        {label: 'list6', value: 'list6'},
+                                        {label: 'list7', value: 'list7'},
+                                    ]}
+                                />
+                            </Groups> 
+                        </div>
 
-                            <Configure lock  /> 
-                            <Configure unlock  /> 
-                            <Configure expand  /> 
-                            <Configure scanning  /> 
-                            <Configure wifi  /> 
-                        </Groups>
+                        <div>
+                            <h4>Figure</h4>
+                            <Groups style={{ marginBottom: 24 }}>
+                                <Figure 
+                                    title="774×1186 131 KB" 
+                                    img="https://t8.baidu.com/it/u=3297273922,3348521994&fm=218&app=126&size=f242,150&n=0&f=JPEG&fmt=auto?s=BA81A14C8BA0BD4308F5D10B0000E0C1&sec=1681491600&t=0a363ddbfcfc830e10038a0ed04be108" 
+                                />
+                            </Groups>  
+                        </div>
 
-                        <Groups> 
-                            <Official email /> 
-                            <Official schedule />   
-                            <Official word /> 
-                            <Official text />
-                            <Official log />
-                            <Official notes />   
-                            <Official label />   
-                        </Groups>
-
-                        <Groups> 
-                            <div onClick={onModeChange}>
-                                <Weather sun />
-                            </div>  
-                            <div onClick={onModeChange}>
-                                <Weather moon />
-                            </div>
-
-                            <div style={{position:'relative'}}>
-                                <Weather plan />
-                            </div> 
-                        </Groups>
-
-                        <Groups> 
-                            <Groups onClick={onToggle}>
-                                {
-                                    isFull ? (
-                                        <Screen screen-off />  
-                                    ): (
-                                        <Screen screen-full />  
-                                    )
-                                }
+                        <div>
+                            <h4>SVG 图标</h4>
+                            <Groups> 
+                                <Loading className='spinner-icon' type="1" /> 
+                                <Loading type="3" className='spinner-zoom' />
+                                <Loading type="2" className='spinner-icon2 ' fontSize="22px"  />  
+                            </Groups>
+                            <Groups> 
+                                <Search search />
+                                <Search find />
+                                <Search history />
+                                <Search zoomIn />
+                                <Search zoomOut />
                             </Groups>
 
-                            <Screen screenshot />
-                            <Screen focus />
-                        </Groups>
+                            <Groups> 
+                                <Symbol close /> 
+                                <Symbol close-o />
+                                <Symbol check  />
+                                <Symbol minus  />
+                                <Symbol plus  />  
+                                <Symbol exclamation  />  
+                            
+                                <Symbol more  />  
+                            </Groups>
 
+                            <Groups> 
+                                <Configure system  />  
+                                <Configure setting  />  
+                                <Configure like  /> 
+                                <Configure tips  /> 
+                                <Configure copy  /> 
+                                <Configure delete  /> 
+                                <Configure power  /> 
+                                <Configure application  /> 
 
-                        <Groups> 
-                            <Media picture />  
-                            <Media album />  
-                            <Media voice-message />  
-                            <Media broadcast />  
-                            <Media camera />  
-                            <Media pause />  
-                            <Media play />  
-                            <Media replay />  
-                            <Media voice />  
-                            <Media voice-off />  
-                            <Media volumn />  
-                            <Media volumn-down />  
-                            <Media volumn-up />  
-                            <Media volumn-mute />  
-                            <Media video />
-                        </Groups> 
+                                <Configure lock  /> 
+                                <Configure unlock  /> 
+                                <Configure expand  /> 
+                                <Configure scanning  /> 
+                                <Configure wifi  /> 
+                            </Groups>
 
-                        <Groups>  
-                            <Direction ring  />  
+                            <Groups> 
+                                <Official email /> 
+                                <Official schedule />   
+                                <Official word /> 
+                                <Official text />
+                                <Official log />
+                                <Official notes />   
+                                <Official label />   
+                            </Groups>
 
-                            <Direction caret-up  />  
-                            <Direction caret-down  />  
-                            <Direction caret-left  />  
-                            <Direction caret-right  />  
+                            <Groups> 
+                                <Weather sun />
+                                <Weather moon />
+                                <Weather plan />
+                                <div onClick={onModeChange}></div>   
+                            </Groups>
 
-                            <Direction arraw-left  />  
-                            <Direction arraw-right  />  
-                            <Direction arraw-down  />  
-                            <Direction arraw-up  />  
+                            <Groups> 
+                                <Groups onClick={onToggle}>
+                                    {
+                                        isFull ? (
+                                            <Screen screen-off />  
+                                        ): (
+                                            <Screen screen-full />  
+                                        )
+                                    }
+                                </Groups>
 
-                            <Direction left  />  
-                            <Direction right  />  
+                                <Screen screenshot />
+                                <Screen focus />
+                            </Groups>
 
-                            <Direction up  />  
-                            <Direction down  />  
-                        </Groups> 
+                            <Groups> 
+                                <Media picture />  
+                                <Media album />  
+                                <Media voice-message />  
+                                <Media broadcast />  
+                                <Media camera />  
+                                <Media pause />  
+                                <Media play />  
+                                <Media replay />  
+                                <Media voice />  
+                                <Media voice-off />  
+                                <Media volumn />  
+                                <Media volumn-down />  
+                                <Media volumn-up />  
+                                <Media volumn-mute />  
+                                <Media video />
+                            </Groups> 
+                            <Groups>  
+                                <Direction ring  />  
+
+                                <Direction caret-up  />  
+                                <Direction caret-down  />  
+                                <Direction caret-left  />  
+                                <Direction caret-right  />  
+
+                                <Direction arraw-left  />  
+                                <Direction arraw-right  />  
+                                <Direction arraw-down  />  
+                                <Direction arraw-up  />  
+
+                                <Direction left  />  
+                                <Direction right  />  
+
+                                <Direction up  />  
+                                <Direction down  />  
+                            </Groups> 
+                        </div> 
                     </div>
                 </Spining> 
             </Card>  
