@@ -2,11 +2,10 @@
 
 
 import { useEffect, useState } from "react";
-
-
+ 
 /**
  * useFullScreen
- *  
+ * 
  */
 
 export function useFullScreen () {
